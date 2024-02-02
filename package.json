@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon src/index.ts",
-    "test": "jest",
+    "test": "jest --watchAll",
     "lint": "gts lint",
     "clean": "gts clean",
     "compile": "tsc",
