@@ -5,9 +5,9 @@ import { type HttpRequest, type HttpResponse } from '../protocols/http'
 export class GetServicesController {
   constructor (private readonly getServices: GetServices) {}
 
-  handle (request: HttpRequest): HttpResponse {
+  async handle (request: HttpRequest): Promise<HttpResponse> {
     try {
-      const services = this.getServices.getAllServices()
+      const services = await this.getServices.getAllServices()
       return ok({ payload: services })
     } catch (error) {
       return serverError()

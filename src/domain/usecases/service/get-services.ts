@@ -5,5 +5,5 @@ export namespace GetServices {
 }
 
 export interface GetServices {
-  getAllServices: () => GetServices.Result
+  getAllServices (): Promise<GetServices.Result>
 }
