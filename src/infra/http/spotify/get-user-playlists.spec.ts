@@ -1,6 +1,7 @@
 import { HttpHelper } from "../http-helper"
 import { SpotifyService } from "./spotify-service"
 import * as getSpotifyUserPlaylists from '../../../../tests/mocks/http/spotify/get-user-playlists.json'
+import { MaximumValueError, MinimumValueError, MissingParamError } from "../../../utils/exceptions"
 
 interface Sut {
   sut: SpotifyService
@@ -22,7 +23,7 @@ describe('Get Spotify User Playlists Service', () => {
     const { sut } = makeSut()
 
     const actual = sut.getPlaylistsByUserId({ accessToken: 'valid-token ', userId: '' })
-    expect(actual).rejects.toEqual(new Error('missing userId'))
+    expect(actual).rejects.toEqual(new MissingParamError('userId'))
   })
 
   test('throw if accessToken is not provided', async () => {
@@ -32,7 +33,7 @@ describe('Get Spotify User Playlists Service', () => {
       userId: 'me',
       accessToken: ''
     })
-    expect(actual).rejects.toEqual(new Error('missing accessToken'))
+    expect(actual).rejects.toEqual(new MissingParamError('accessToken'))
   })
 
   test('throw if limit is 0', async () => {
@@ -42,7 +43,7 @@ describe('Get Spotify User Playlists Service', () => {
       userId: 'me',
       accessToken: 'valid-token'
     })
-    expect(actual).rejects.toEqual(new Error('minimum limit is 1'))
+    expect(actual).rejects.toEqual(new MinimumValueError('limit', 1))
   })
 
   test('throw if limit is less than 0', async () => {
@@ -52,7 +53,7 @@ describe('Get Spotify User Playlists Service', () => {
       userId: 'me',
       accessToken: 'valid-token'
     })
-    expect(actual).rejects.toEqual(new Error('minimum limit is 1'))
+    expect(actual).rejects.toEqual(new MinimumValueError('limit', 1))
   })
 
   test('throw if limit is greater than 50', async () => {
@@ -62,7 +63,7 @@ describe('Get Spotify User Playlists Service', () => {
       userId: 'me',
       accessToken: 'valid-token'
     })
-    expect(actual).rejects.toEqual(new Error('maximum limit is 50'))
+    expect(actual).rejects.toEqual(new MaximumValueError('limit', 50))
   })
 
   test('throw if offset is less than 0', async () => {
@@ -72,7 +73,7 @@ describe('Get Spotify User Playlists Service', () => {
       userId: 'me',
       accessToken: 'valid-token'
     })
-    expect(actual).rejects.toEqual(new Error('minimum offset is 0'))
+    expect(actual).rejects.toEqual(new MinimumValueError('offset', 0))
   })
 
   test('throw if offset is greater than 100,000', async () => {
@@ -82,7 +83,33 @@ describe('Get Spotify User Playlists Service', () => {
       userId: 'me',
       accessToken: 'valid-token'
     })
-    expect(actual).rejects.toEqual(new Error('maximum offset is 100,000'))
+    expect(actual).rejects.toEqual(new MaximumValueError('offset', 100_000))
+  })
+
+  test('make sure httpClient.request is called correctly', async () => {
+    const { sut, httpHelper } = makeSut()
+    const httpHelperSpy = jest.spyOn(httpHelper, 'request')
+    
+    httpHelperSpy.mockResolvedValueOnce({
+      body: getSpotifyUserPlaylists,
+      status: 200
+    })
+
+    const params = {
+      userId: 'me',
+      accessToken: 'valid-token'
+    }
+
+    await sut.getPlaylistsByUserId(params)
+
+    const limit = 20
+    const offset = 0
+    expect(httpHelperSpy).toHaveBeenCalledWith({
+      headers: { Authorization: `Bearer ${params.accessToken}`},
+      method: 'GET',
+      url: `/users/${params.userId}/playlists?limit=${limit}&offset=${offset}`,
+
+    })
   })
 
   test('return playlists successfully', async () => {
