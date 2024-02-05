@@ -1,0 +1,860 @@
+{
+  "href": "https://api.spotify.com/v1/users/me/playlists?offset=0&limit=20",
+  "items": [
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/0SoTKcd3DIdVRDGQjt4gYT"
+      },
+      "href": "https://api.spotify.com/v1/playlists/0SoTKcd3DIdVRDGQjt4gYT",
+      "id": "0SoTKcd3DIdVRDGQjt4gYT",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b2731017dcbb70b4a7d9cf072a85ab67616d0000b2731b96e645016c4d431842aa93ab67616d0000b2736400fab74f28e90759ac8815ab67616d0000b273c85acdd9971e7eb8c326cd1c",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b2731017dcbb70b4a7d9cf072a85ab67616d0000b2731b96e645016c4d431842aa93ab67616d0000b2736400fab74f28e90759ac8815ab67616d0000b273c85acdd9971e7eb8c326cd1c",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b2731017dcbb70b4a7d9cf072a85ab67616d0000b2731b96e645016c4d431842aa93ab67616d0000b2736400fab74f28e90759ac8815ab67616d0000b273c85acdd9971e7eb8c326cd1c",
+          "width": 60
+        }
+      ],
+      "name": "Mickes januari 2024",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "OCwzM2U3MDRlZWEyNDcyNTY4MDBkMGJjYjY1MTY3ODZiZmI5MDE4MTMy",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/0SoTKcd3DIdVRDGQjt4gYT/tracks",
+        "total": 6
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:0SoTKcd3DIdVRDGQjt4gYT"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/0N9ScIRYR13WyOcfMvqzHQ"
+      },
+      "href": "https://api.spotify.com/v1/playlists/0N9ScIRYR13WyOcfMvqzHQ",
+      "id": "0N9ScIRYR13WyOcfMvqzHQ",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b27347e2575c4450bb5d4496d3f6ab67616d0000b2735bd7a950271ee3aa3ebb20e2ab67616d0000b273949707e4dec767015e9d6168ab67616d0000b273cd118ccd0062b7b52f13d19d",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b27347e2575c4450bb5d4496d3f6ab67616d0000b2735bd7a950271ee3aa3ebb20e2ab67616d0000b273949707e4dec767015e9d6168ab67616d0000b273cd118ccd0062b7b52f13d19d",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b27347e2575c4450bb5d4496d3f6ab67616d0000b2735bd7a950271ee3aa3ebb20e2ab67616d0000b273949707e4dec767015e9d6168ab67616d0000b273cd118ccd0062b7b52f13d19d",
+          "width": 60
+        }
+      ],
+      "name": "Mickes december 2023",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "MTIsMjlmZGE1ZjczMGUwOGVkNjA0OTdmMDI4MTA2NGY0MzFkNDRjZmVkMA==",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/0N9ScIRYR13WyOcfMvqzHQ/tracks",
+        "total": 4
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:0N9ScIRYR13WyOcfMvqzHQ"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/3bRAthZv4RhwlpzXyznOK7"
+      },
+      "href": "https://api.spotify.com/v1/playlists/3bRAthZv4RhwlpzXyznOK7",
+      "id": "3bRAthZv4RhwlpzXyznOK7",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b27306f5e06e637cbcafc8058360ab67616d0000b2730e489f9cd0f28b3ca56b2191ab67616d0000b273543c5b97fdd3784b7dbc01a1ab67616d0000b27384a069a9ea478c093a044fec",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b27306f5e06e637cbcafc8058360ab67616d0000b2730e489f9cd0f28b3ca56b2191ab67616d0000b273543c5b97fdd3784b7dbc01a1ab67616d0000b27384a069a9ea478c093a044fec",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b27306f5e06e637cbcafc8058360ab67616d0000b2730e489f9cd0f28b3ca56b2191ab67616d0000b273543c5b97fdd3784b7dbc01a1ab67616d0000b27384a069a9ea478c093a044fec",
+          "width": 60
+        }
+      ],
+      "name": "Mickes November 2023",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "MTEsY2RlMWZjN2YzOWM0YzgwMmMwZDU0ODU4NjY0ZTM2ZWEzMGY0YTU1ZA==",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/3bRAthZv4RhwlpzXyznOK7/tracks",
+        "total": 7
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:3bRAthZv4RhwlpzXyznOK7"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/4BcTfyjT6eGFgBXQVOvYct"
+      },
+      "href": "https://api.spotify.com/v1/playlists/4BcTfyjT6eGFgBXQVOvYct",
+      "id": "4BcTfyjT6eGFgBXQVOvYct",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b27342f4498302d0b130aa95cddcab67616d0000b2734e1ff56eb541da4b0450a6a8ab67616d0000b2735ab78a1995a49eac4e422318ab67616d0000b2735d766d46d15c6302cd747667",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b27342f4498302d0b130aa95cddcab67616d0000b2734e1ff56eb541da4b0450a6a8ab67616d0000b2735ab78a1995a49eac4e422318ab67616d0000b2735d766d46d15c6302cd747667",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b27342f4498302d0b130aa95cddcab67616d0000b2734e1ff56eb541da4b0450a6a8ab67616d0000b2735ab78a1995a49eac4e422318ab67616d0000b2735d766d46d15c6302cd747667",
+          "width": 60
+        }
+      ],
+      "name": "Dansstopp",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "MTUsYzU4ZTcyY2MyNjIzOTg2ODcxMzhiMTU1MTE2MzE1ODcwMDE0YzhhMw==",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/4BcTfyjT6eGFgBXQVOvYct/tracks",
+        "total": 8
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:4BcTfyjT6eGFgBXQVOvYct"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/7qWlzv5dFl2bB0euMaTI6F"
+      },
+      "href": "https://api.spotify.com/v1/playlists/7qWlzv5dFl2bB0euMaTI6F",
+      "id": "7qWlzv5dFl2bB0euMaTI6F",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b27309dc775999d5a6d87d156c2fab67616d0000b27331269be6ef54f32377292d8bab67616d0000b273570dc58e0f987d4048bb91d1ab67616d0000b273e459fa7bfa1a51b7df74749f",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b27309dc775999d5a6d87d156c2fab67616d0000b27331269be6ef54f32377292d8bab67616d0000b273570dc58e0f987d4048bb91d1ab67616d0000b273e459fa7bfa1a51b7df74749f",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b27309dc775999d5a6d87d156c2fab67616d0000b27331269be6ef54f32377292d8bab67616d0000b273570dc58e0f987d4048bb91d1ab67616d0000b273e459fa7bfa1a51b7df74749f",
+          "width": 60
+        }
+      ],
+      "name": "Mickes oktober 2023",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "MTUsMWFkODQ5MDM5NDU1OTU2ZTJmOWRjMDUzZWFmMTUyZmMwOTRhMWUxOQ==",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/7qWlzv5dFl2bB0euMaTI6F/tracks",
+        "total": 4
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:7qWlzv5dFl2bB0euMaTI6F"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/5zCwJrOvbmi9BG9hdPTn6D"
+      },
+      "href": "https://api.spotify.com/v1/playlists/5zCwJrOvbmi9BG9hdPTn6D",
+      "id": "5zCwJrOvbmi9BG9hdPTn6D",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b273daafe7e8ce767dde69f9c1b3",
+          "width": 640
+        }
+      ],
+      "name": "Vart trött sen 98",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "MixjMzA1ODFkY2QzM2RiZDAxYzEzZGNkZDMwNjExYjFmNTVmYTk2MjZh",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/5zCwJrOvbmi9BG9hdPTn6D/tracks",
+        "total": 13
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:5zCwJrOvbmi9BG9hdPTn6D"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/4a3TWozyYzzMam2vxVUPSu"
+      },
+      "href": "https://api.spotify.com/v1/playlists/4a3TWozyYzzMam2vxVUPSu",
+      "id": "4a3TWozyYzzMam2vxVUPSu",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b27333f6ecba8b25a4cd94ec7451",
+          "width": 640
+        }
+      ],
+      "name": "Mickes september 2023",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "Niw4ODlmYjBhNzA2NzQ2MmFlNTdjMjhkOTI2MzdkM2JiYzc1OTdmNzE1",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/4a3TWozyYzzMam2vxVUPSu/tracks",
+        "total": 3
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:4a3TWozyYzzMam2vxVUPSu"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/04hD4h4TVmp2EDLwqDWkRi"
+      },
+      "href": "https://api.spotify.com/v1/playlists/04hD4h4TVmp2EDLwqDWkRi",
+      "id": "04hD4h4TVmp2EDLwqDWkRi",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b2733a551ec74b4634e66e6cf803",
+          "width": 640
+        }
+      ],
+      "name": "Mickes augusti 2023",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "Miw5YzgzOWJlOTI0YjQ5NWYzNTJhNGVhMThmZDdhZjU1ZGVlZGE1ZWUx",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/04hD4h4TVmp2EDLwqDWkRi/tracks",
+        "total": 1
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:04hD4h4TVmp2EDLwqDWkRi"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/5YtdmmLOYaIiNQbPrlDN1V"
+      },
+      "href": "https://api.spotify.com/v1/playlists/5YtdmmLOYaIiNQbPrlDN1V",
+      "id": "5YtdmmLOYaIiNQbPrlDN1V",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b2738bf43d19fc593c9c4673a0fb",
+          "width": 640
+        }
+      ],
+      "name": "Mickes Juli 2023",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "OCw2MjMyMjVhMDJiMmM2MDAwYmZiYThiZDU4M2ZlZDZmODdkMDliZjMy",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/5YtdmmLOYaIiNQbPrlDN1V/tracks",
+        "total": 3
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:5YtdmmLOYaIiNQbPrlDN1V"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/0yV4QWc3y97JzFruzXahbv"
+      },
+      "href": "https://api.spotify.com/v1/playlists/0yV4QWc3y97JzFruzXahbv",
+      "id": "0yV4QWc3y97JzFruzXahbv",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b2738fc3f01275cae3d8ecb1c26bab67616d0000b27391a87b5bd84eecfd0eddb1edab67616d0000b273a750f638e65e8fd752c5611dab67616d0000b273fb87b874d265126523504ecd",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b2738fc3f01275cae3d8ecb1c26bab67616d0000b27391a87b5bd84eecfd0eddb1edab67616d0000b273a750f638e65e8fd752c5611dab67616d0000b273fb87b874d265126523504ecd",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b2738fc3f01275cae3d8ecb1c26bab67616d0000b27391a87b5bd84eecfd0eddb1edab67616d0000b273a750f638e65e8fd752c5611dab67616d0000b273fb87b874d265126523504ecd",
+          "width": 60
+        }
+      ],
+      "name": "EXIT SOUNDTRACK NRK (2)",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "MiwxOTgyMWJjMWY0MmVlYWJmYjNlMWJmYWM5MTJmMTcyYjI3ODI5Zjdk",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/0yV4QWc3y97JzFruzXahbv/tracks",
+        "total": 39
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:0yV4QWc3y97JzFruzXahbv"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/6TeYFbnrVdwYRtBXP26lz8"
+      },
+      "href": "https://api.spotify.com/v1/playlists/6TeYFbnrVdwYRtBXP26lz8",
+      "id": "6TeYFbnrVdwYRtBXP26lz8",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b27321f10c8e9db02ed4ab4464d8ab67616d0000b2732529a7189c306c86ddf4dacaab67616d0000b2732b90a541aba522822a5f2e36ab67616d0000b2736e609dbe7dc60a9790c90d15",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b27321f10c8e9db02ed4ab4464d8ab67616d0000b2732529a7189c306c86ddf4dacaab67616d0000b2732b90a541aba522822a5f2e36ab67616d0000b2736e609dbe7dc60a9790c90d15",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b27321f10c8e9db02ed4ab4464d8ab67616d0000b2732529a7189c306c86ddf4dacaab67616d0000b2732b90a541aba522822a5f2e36ab67616d0000b2736e609dbe7dc60a9790c90d15",
+          "width": 60
+        }
+      ],
+      "name": "Mickes maj 2023",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "MTEsYmIzYzJmZWE1Yzk0ZjIwYThiYzYyOWJjNTM0NjBhOGFiYTY5MWJkYg==",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/6TeYFbnrVdwYRtBXP26lz8/tracks",
+        "total": 5
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:6TeYFbnrVdwYRtBXP26lz8"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/65vnSA7Wka5MdRJhHKNCWb"
+      },
+      "href": "https://api.spotify.com/v1/playlists/65vnSA7Wka5MdRJhHKNCWb",
+      "id": "65vnSA7Wka5MdRJhHKNCWb",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b2730bfccd9fd96f435a7cae1862ab67616d0000b27341101f419a7cfab0a6b0b3fbab67616d0000b273e17906bafb11de5f40a6d792ab67616d0000b273ef98530150af1c12bff2486f",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b2730bfccd9fd96f435a7cae1862ab67616d0000b27341101f419a7cfab0a6b0b3fbab67616d0000b273e17906bafb11de5f40a6d792ab67616d0000b273ef98530150af1c12bff2486f",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b2730bfccd9fd96f435a7cae1862ab67616d0000b27341101f419a7cfab0a6b0b3fbab67616d0000b273e17906bafb11de5f40a6d792ab67616d0000b273ef98530150af1c12bff2486f",
+          "width": 60
+        }
+      ],
+      "name": "Mickes april 2023",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "MzEsZGVlY2Y2MWUwYjg1NTNlMTZkOGE5ZmM4NGRjYjkzZjJjZDAyYjUzZQ==",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/65vnSA7Wka5MdRJhHKNCWb/tracks",
+        "total": 8
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:65vnSA7Wka5MdRJhHKNCWb"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/615UmeBdLVCDiuMfpBAcpf"
+      },
+      "href": "https://api.spotify.com/v1/playlists/615UmeBdLVCDiuMfpBAcpf",
+      "id": "615UmeBdLVCDiuMfpBAcpf",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b2733a795c7a29b1a455a79be344ab67616d0000b273a1d5a4f7a04c507ba9b86bbbab67616d0000b273a5801d6e42b460e69d6f8ed1ab67616d0000b273f028e8d95e76c9206d23340a",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b2733a795c7a29b1a455a79be344ab67616d0000b273a1d5a4f7a04c507ba9b86bbbab67616d0000b273a5801d6e42b460e69d6f8ed1ab67616d0000b273f028e8d95e76c9206d23340a",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b2733a795c7a29b1a455a79be344ab67616d0000b273a1d5a4f7a04c507ba9b86bbbab67616d0000b273a5801d6e42b460e69d6f8ed1ab67616d0000b273f028e8d95e76c9206d23340a",
+          "width": 60
+        }
+      ],
+      "name": "Mickes mars 2023",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "OCw2MGZmYzI4ZDU2NTA1NjA0ZmMxNTE1YWU2ZjVjZTcyNGE4ZjhiNmMz",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/615UmeBdLVCDiuMfpBAcpf/tracks",
+        "total": 7
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:615UmeBdLVCDiuMfpBAcpf"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/4zNkAUKedOi1oJOHB7ThU1"
+      },
+      "href": "https://api.spotify.com/v1/playlists/4zNkAUKedOi1oJOHB7ThU1",
+      "id": "4zNkAUKedOi1oJOHB7ThU1",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b273fbb4c8909e99ac6aa86a7ccc",
+          "width": 640
+        }
+      ],
+      "name": "Mickes februari 2023",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "NyxjNWQ3MzNjOTIwZjAyNzc2YWQ2NzE5Mjg2ODRiMGI4N2VmNzkyZDQz",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/4zNkAUKedOi1oJOHB7ThU1/tracks",
+        "total": 2
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:4zNkAUKedOi1oJOHB7ThU1"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/59dn0IfYiT7OcbeUq84eFH"
+      },
+      "href": "https://api.spotify.com/v1/playlists/59dn0IfYiT7OcbeUq84eFH",
+      "id": "59dn0IfYiT7OcbeUq84eFH",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b2731e45774efd5e06b68c1693afab67616d0000b27324bcabbed82de4935bd78955ab67616d0000b27348dc64582941bd0b4c87f81fab67616d0000b273ab68cb9a905107fb91256411",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b2731e45774efd5e06b68c1693afab67616d0000b27324bcabbed82de4935bd78955ab67616d0000b27348dc64582941bd0b4c87f81fab67616d0000b273ab68cb9a905107fb91256411",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b2731e45774efd5e06b68c1693afab67616d0000b27324bcabbed82de4935bd78955ab67616d0000b27348dc64582941bd0b4c87f81fab67616d0000b273ab68cb9a905107fb91256411",
+          "width": 60
+        }
+      ],
+      "name": "Mickes januari 2023",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "MzcsMzlkZWUxMzAzNmEzNTY5MzcyMjViYWJhZGE2MTQyYzA2MTBhM2YxZA==",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/59dn0IfYiT7OcbeUq84eFH/tracks",
+        "total": 9
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:59dn0IfYiT7OcbeUq84eFH"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/1oVVhMSRYmbUdGrtrNqiLj"
+      },
+      "href": "https://api.spotify.com/v1/playlists/1oVVhMSRYmbUdGrtrNqiLj",
+      "id": "1oVVhMSRYmbUdGrtrNqiLj",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b27304973d47074eb035a0840d87",
+          "width": 640
+        }
+      ],
+      "name": "Mickes december 2022",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "NiwzYTBmODc5NTJlOWU4MjhhYTQ5ZDIzMTExMTAzMzE0NGM0Y2M1M2I2",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/1oVVhMSRYmbUdGrtrNqiLj/tracks",
+        "total": 3
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:1oVVhMSRYmbUdGrtrNqiLj"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/7jp7GVztAMYve3tb55G7SX"
+      },
+      "href": "https://api.spotify.com/v1/playlists/7jp7GVztAMYve3tb55G7SX",
+      "id": "7jp7GVztAMYve3tb55G7SX",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b2732869ddfa45e09e9aa30afc70ab67616d0000b27346ff9ddeaafe995077d8079dab67616d0000b27385b51e47b16a87b82c252dc5ab67616d0000b273df8aac7657394375a6e01fc6",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b2732869ddfa45e09e9aa30afc70ab67616d0000b27346ff9ddeaafe995077d8079dab67616d0000b27385b51e47b16a87b82c252dc5ab67616d0000b273df8aac7657394375a6e01fc6",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b2732869ddfa45e09e9aa30afc70ab67616d0000b27346ff9ddeaafe995077d8079dab67616d0000b27385b51e47b16a87b82c252dc5ab67616d0000b273df8aac7657394375a6e01fc6",
+          "width": 60
+        }
+      ],
+      "name": "Mickes november 2022",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "MjQsMjMwYjBkNDA3NDcxNWIzM2YzODM5YWNlYjU0NTQ1M2E1ZDhjZjAwMg==",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/7jp7GVztAMYve3tb55G7SX/tracks",
+        "total": 12
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:7jp7GVztAMYve3tb55G7SX"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/3uyUO2PdsSLIYsk4KzXq92"
+      },
+      "href": "https://api.spotify.com/v1/playlists/3uyUO2PdsSLIYsk4KzXq92",
+      "id": "3uyUO2PdsSLIYsk4KzXq92",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b27359d8a04ac55f3c94ee502e3f",
+          "width": 640
+        }
+      ],
+      "name": "Kaiho",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "MiwxZTlkOWQzMGQ1NmFjMzAxMjdkZjY0ZTQwNTIwMjJmODhkNjFmNjNl",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/3uyUO2PdsSLIYsk4KzXq92/tracks",
+        "total": 8
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:3uyUO2PdsSLIYsk4KzXq92"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/06a0KxOrVZNzoacvDKKOCR"
+      },
+      "href": "https://api.spotify.com/v1/playlists/06a0KxOrVZNzoacvDKKOCR",
+      "id": "06a0KxOrVZNzoacvDKKOCR",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b27301481d03c32d8ef0f44eac7eab67616d0000b27313f1c7484bd3bc4529200548ab67616d0000b2732383b070995ec7dd06496355ab67616d0000b2733ba11dd2782f40cedacd7d7a",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b27301481d03c32d8ef0f44eac7eab67616d0000b27313f1c7484bd3bc4529200548ab67616d0000b2732383b070995ec7dd06496355ab67616d0000b2733ba11dd2782f40cedacd7d7a",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b27301481d03c32d8ef0f44eac7eab67616d0000b27313f1c7484bd3bc4529200548ab67616d0000b2732383b070995ec7dd06496355ab67616d0000b2733ba11dd2782f40cedacd7d7a",
+          "width": 60
+        }
+      ],
+      "name": "Mickes oktober 2022",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "MTUsZmVhZTIwZDY4MDFjZGI4YWM5ZTlkZjQ2YTg1MGUyZWE3MWU2ZmRjYQ==",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/06a0KxOrVZNzoacvDKKOCR/tracks",
+        "total": 6
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:06a0KxOrVZNzoacvDKKOCR"
+    },
+    {
+      "collaborative": false,
+      "description": "",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/playlist/1IzXHcz9NJrmsY5kp1nCC8"
+      },
+      "href": "https://api.spotify.com/v1/playlists/1IzXHcz9NJrmsY5kp1nCC8",
+      "id": "1IzXHcz9NJrmsY5kp1nCC8",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://mosaic.scdn.co/640/ab67616d0000b2735ef42cecbaa85c78b199e630ab67616d0000b2739cfe9f13cea8d29d447b1fe3ab67616d0000b273b4a4aebb1c2fad0de85f7e7aab67616d0000b273fde5b514caba2c95cb60711e",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://mosaic.scdn.co/300/ab67616d0000b2735ef42cecbaa85c78b199e630ab67616d0000b2739cfe9f13cea8d29d447b1fe3ab67616d0000b273b4a4aebb1c2fad0de85f7e7aab67616d0000b273fde5b514caba2c95cb60711e",
+          "width": 300
+        },
+        {
+          "height": 60,
+          "url": "https://mosaic.scdn.co/60/ab67616d0000b2735ef42cecbaa85c78b199e630ab67616d0000b2739cfe9f13cea8d29d447b1fe3ab67616d0000b273b4a4aebb1c2fad0de85f7e7aab67616d0000b273fde5b514caba2c95cb60711e",
+          "width": 60
+        }
+      ],
+      "name": "Mickes September 2022",
+      "owner": {
+        "display_name": "Micael Widell",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/user/me"
+        },
+        "href": "https://api.spotify.com/v1/users/me",
+        "id": "me",
+        "type": "user",
+        "uri": "spotify:user:me"
+      },
+      "primary_color": null,
+      "public": true,
+      "snapshot_id": "NSxkNTUwZmFlZmYwZGU5YzUzOTdkZmRiZjhkMDNhM2ZmNDc1MGZkNTQy",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/playlists/1IzXHcz9NJrmsY5kp1nCC8/tracks",
+        "total": 4
+      },
+      "type": "playlist",
+      "uri": "spotify:playlist:1IzXHcz9NJrmsY5kp1nCC8"
+    }
+  ],
+  "limit": 20,
+  "next": "https://api.spotify.com/v1/users/me/playlists?offset=20&limit=20",
+  "offset": 0,
+  "previous": null,
+  "total": 192
+}
