@@ -1,4 +1,5 @@
 import { type GetSpotifyUserPlaylistsParams, type GetSpotifyUserPlaylists, type GetSpotifyUserPlaylistsResult } from '../../../data/protocols/http/spotify/get-user-playlists'
+import { MaximumValueError, MinimumValueError, MissingParamError } from '../../../utils/exceptions'
 import { type HttpHelper } from '../http-helper'
 import { type GetSpotifyUserPlaylistsResponseBody } from './types/get-user-playlists'
 
@@ -7,17 +8,18 @@ export class SpotifyService implements GetSpotifyUserPlaylists {
 
   async getPlaylistsByUserId (params: GetSpotifyUserPlaylistsParams): Promise<GetSpotifyUserPlaylistsResult> {
     const { accessToken, userId, limit, offset } = params
-    if (!accessToken) throw new Error('missing accessToken')
-    if (!userId) throw new Error('missing userId')
-    if (limit === 0) throw new Error('minimum limit is 1')
-    if (limit && limit < 1) throw new Error('minimum limit is 1')
-    if (limit && limit > 50) throw new Error('maximum limit is 50')
-    if (offset && offset < 0) throw new Error('minimum offset is 0')
-    if (offset && offset > 100_000) throw new Error('maximum offset is 100,000')
+    if (!accessToken) throw new MissingParamError('accessToken')
+    if (!userId) throw new MissingParamError('userId')
+    if (limit === 0) throw new MinimumValueError('limit', 1)
+    if (limit && limit < 1) throw new MinimumValueError('limit', 1)
+    if (limit && limit > 50) throw new MaximumValueError('limit', 50)
+    if (offset && offset < 0) throw new MinimumValueError('offset', 0)
+    if (offset && offset > 100_000) throw new MaximumValueError('offset', 100_000)
 
     const response = await this.httpHelper.request<GetSpotifyUserPlaylistsResponseBody>({
       method: 'GET',
-      url: `/users/${userId}/playlists`
+      url: `/users/${userId}/playlists?limit=${limit ?? 20}&offset=${offset ?? 0}`,
+      headers: { Authorization: `Bearer ${accessToken}` }
     })
 
     const payload = response.body.items.map(

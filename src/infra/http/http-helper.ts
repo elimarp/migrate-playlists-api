@@ -1,8 +1,9 @@
-import { Axios, type Method } from 'axios'
+import { Axios, type RawAxiosRequestHeaders, type Method } from 'axios'
 
 type Request = {
   method: Method
   url: string
+  headers?: RawAxiosRequestHeaders
 }
 
 type Response<T> = {
@@ -20,7 +21,8 @@ export class HttpHelper {
   async request<ResponseBody> (params: Request): Promise<Response<ResponseBody>> {
     const response = await this.axios.request<ResponseBody>({
       method: params.method,
-      url: params.url
+      url: params.url,
+      headers: params.headers
     })
 
     return {
