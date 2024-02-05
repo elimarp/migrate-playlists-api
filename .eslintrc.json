@@ -11,12 +11,14 @@
     "rules": {
         "@typescript-eslint/no-namespace": "off",
         "@typescript-eslint/method-signature-style": "off",
-        "@typescript-eslint/consistent-type-definitions": "off"
+        "@typescript-eslint/consistent-type-definitions": "off",
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/array-type": "off"
     },
     "overrides": [
         {
             "files": [
-                "test/**",
+                "tests/**",
                 "src/**/*.spec.ts"
             ],
             "plugins": [
