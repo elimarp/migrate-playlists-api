@@ -147,4 +147,6 @@ describe('Get Spotify User Playlists Service', () => {
       isPublic: expect.any(Boolean)
     })
   })
+
+  // TODO: test throw new spotify token expired
 })
