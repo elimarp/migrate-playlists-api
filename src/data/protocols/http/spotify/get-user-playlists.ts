@@ -1,11 +1,11 @@
-export type GetSpotifyUserPlaylistsParams = {
+export interface GetSpotifyUserPlaylistsServiceParams {
   userId: string
   accessToken: string
   limit?: number
   offset?: number
 }
 
-export type GetSpotifyUserPlaylistsResult = {
+export interface GetSpotifyUserPlaylistsServiceResult {
   total: number
   offset: number
   limit: number
@@ -21,8 +21,7 @@ export type GetSpotifyUserPlaylistsResult = {
     }[]
     totalTracks: number
   }[]
-
 }
-export interface GetSpotifyUserPlaylists {
-  getPlaylistsByUserId(params: GetSpotifyUserPlaylistsParams): Promise<GetSpotifyUserPlaylistsResult>
+export interface GetSpotifyUserPlaylistsService {
+  getPlaylistsByUserId(params: GetSpotifyUserPlaylistsServiceParams): Promise<GetSpotifyUserPlaylistsServiceResult>
 }

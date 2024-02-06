@@ -1,12 +1,12 @@
-import { type GetSpotifyUserPlaylistsParams, type GetSpotifyUserPlaylists, type GetSpotifyUserPlaylistsResult } from '../../../data/protocols/http/spotify/get-user-playlists'
+import { type GetSpotifyUserPlaylistsServiceParams, type GetSpotifyUserPlaylistsService, type GetSpotifyUserPlaylistsServiceResult } from '../../../data/protocols/http/spotify/get-user-playlists'
 import { MaximumValueError, MinimumValueError, MissingParamError } from '../../../utils/exceptions'
 import { type HttpHelper } from '../http-helper'
 import { type GetSpotifyUserPlaylistsResponseBody } from './types/get-user-playlists'
 
-export class SpotifyService implements GetSpotifyUserPlaylists {
+export class SpotifyService implements GetSpotifyUserPlaylistsService {
   constructor (private readonly httpHelper: HttpHelper) { }
 
-  async getPlaylistsByUserId (params: GetSpotifyUserPlaylistsParams): Promise<GetSpotifyUserPlaylistsResult> {
+  async getPlaylistsByUserId (params: GetSpotifyUserPlaylistsServiceParams): Promise<GetSpotifyUserPlaylistsServiceResult> {
     const { accessToken, userId, limit, offset } = params
     if (!accessToken) throw new MissingParamError('accessToken')
     if (!userId) throw new MissingParamError('userId')
