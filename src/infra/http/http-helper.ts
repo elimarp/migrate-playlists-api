@@ -1,12 +1,12 @@
 import { Axios, type RawAxiosRequestHeaders, type Method } from 'axios'
 
-type Request = {
+export type HttpHelperRequest = {
   method: Method
   url: string
   headers?: RawAxiosRequestHeaders
 }
 
-type Response<T> = {
+export type HttpHelperResponse<T> = {
   status: number
   body: T
 }
@@ -18,7 +18,7 @@ export class HttpHelper {
     this.axios = baseUrl ? new Axios({ baseURL: baseUrl }) : new Axios()
   }
 
-  async request<ResponseBody> (params: Request): Promise<Response<ResponseBody>> {
+  async request<ResponseBody> (params: HttpHelperRequest): Promise<HttpHelperResponse<ResponseBody>> {
     const response = await this.axios.request<ResponseBody>({
       method: params.method,
       url: params.url,

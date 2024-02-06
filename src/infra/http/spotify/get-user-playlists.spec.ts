@@ -1,4 +1,4 @@
-import { HttpHelper } from "../http-helper"
+import { HttpHelper, HttpHelperRequest, HttpHelperResponse } from "../http-helper"
 import { SpotifyService } from "./spotify-service"
 import * as getSpotifyUserPlaylists from '../../../../tests/mocks/http/spotify/get-user-playlists.json'
 import { MaximumValueError, MinimumValueError, MissingParamError } from "../../../utils/exceptions"
@@ -8,10 +8,25 @@ interface Sut {
   httpHelper: HttpHelper
 }
 
+// TODO: .env
 const SPOTIFY_BASE_URL = 'https://api.spotify.com'
 
+class HttpHelperStub extends HttpHelper {
+  constructor(baseUrl: string) {
+    super(baseUrl)
+  }
+
+  async request(params: HttpHelperRequest): Promise<HttpHelperResponse<any>> {
+    return {
+      body: getSpotifyUserPlaylists,
+      status: 200
+    }
+  }
+
+}
+
 const makeSut = (): Sut => {
-  const httpHelper = new HttpHelper(SPOTIFY_BASE_URL)
+  const httpHelper = new HttpHelperStub(SPOTIFY_BASE_URL)
   return {
     sut: new SpotifyService(httpHelper),
     httpHelper
@@ -22,7 +37,7 @@ describe('Get Spotify User Playlists Service', () => {
   test('throw if userId is not provided', async () => {
     const { sut } = makeSut()
 
-    const actual = sut.getPlaylistsByUserId({ accessToken: 'valid-token ', userId: '' })
+    const actual = sut.getPlaylistsByUserId({ accessToken: 'valid-token', userId: '' })
     expect(actual).rejects.toEqual(new MissingParamError('userId'))
   })
 
@@ -89,11 +104,6 @@ describe('Get Spotify User Playlists Service', () => {
   test('make sure httpClient.request is called correctly', async () => {
     const { sut, httpHelper } = makeSut()
     const httpHelperSpy = jest.spyOn(httpHelper, 'request')
-    
-    httpHelperSpy.mockResolvedValueOnce({
-      body: getSpotifyUserPlaylists,
-      status: 200
-    })
 
     const params = {
       userId: 'me',
@@ -105,7 +115,7 @@ describe('Get Spotify User Playlists Service', () => {
     const limit = 20
     const offset = 0
     expect(httpHelperSpy).toHaveBeenCalledWith({
-      headers: { Authorization: `Bearer ${params.accessToken}`},
+      headers: { Authorization: `Bearer ${params.accessToken}` },
       method: 'GET',
       url: `/users/${params.userId}/playlists?limit=${limit}&offset=${offset}`,
 
@@ -113,12 +123,7 @@ describe('Get Spotify User Playlists Service', () => {
   })
 
   test('return playlists successfully', async () => {
-    const { sut, httpHelper } = makeSut()
-
-    jest.spyOn(httpHelper, 'request').mockResolvedValueOnce({
-      body: getSpotifyUserPlaylists,
-      status: 200
-    })
+    const { sut } = makeSut()
 
     const actual = await sut.getPlaylistsByUserId({
       userId: 'me',
