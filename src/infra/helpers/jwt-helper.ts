@@ -1,4 +1,5 @@
 import { verify, sign, type VerifyOptions, type SignOptions } from 'jsonwebtoken'
+import { AccessTokenExpiredError } from './exceptions'
 
 // TODO: .env jwt secret
 const JWT_SECRET = '75330d17f4494fe6bab5a6a175eab8a5_084329942086'
@@ -17,7 +18,7 @@ export class JwtHelper {
 
       verify(jwt, JWT_SECRET, options ?? {}, (error, data) => {
         if (error) {
-          if (error?.name === 'TokenExpiredError') reject(new Error('jwt expired'))
+          if (error?.name === 'TokenExpiredError') reject(new AccessTokenExpiredError())
           else reject(error)
           return
         }
