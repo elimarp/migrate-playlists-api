@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 type CreateRandomPlaylistListParams = { limit?: number, offset?: number }
-export const createRandomPlaylistList = ({ limit: limitInput, offset: offsetInput }: CreateRandomPlaylistListParams) => {
+export const makeRandomPlaylistList = ({ limit: limitInput, offset: offsetInput }: CreateRandomPlaylistListParams) => {
   const total = faker.number.int({ min: 0, max: 180 })
   const limit = limitInput ?? 20
   const offset = offsetInput ?? 0

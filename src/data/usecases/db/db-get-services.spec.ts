@@ -1,7 +1,7 @@
 import { ServiceModel } from '../../../domain/models/service'
-import { type GetServices } from '../../../domain/usecases/service/get-services'
+import { GetServicesProtocol } from '../../../domain/usecases/service/get-services'
 import { GetServicesRepository } from '../../protocols/db/get-services-repository'
-import { DbGetServices } from './db-get-services'
+import { GetServices } from './db-get-services'
 
 const servicesMock: ServiceModel[] = [
   { id: 'service01', imageUrl: 'service01-image-url', name: 'Service 01' },
@@ -16,7 +16,7 @@ class GetServicesRepositoryStub implements GetServicesRepository {
 }
 
 interface Sut {
-  sut: GetServices
+  sut: GetServicesProtocol
   getServicesRepositoryStub: GetServicesRepository
 }
 
@@ -24,7 +24,7 @@ const makeSut = (): Sut => {
   const getServicesRepositoryStub = new GetServicesRepositoryStub()
 
   return {
-    sut: new DbGetServices(getServicesRepositoryStub),
+    sut: new GetServices(getServicesRepositoryStub),
     getServicesRepositoryStub
   }
 }

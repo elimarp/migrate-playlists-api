@@ -1,12 +1,12 @@
-import { type GetServices } from '../../../domain/usecases/service/get-services'
+import { type GetServicesProtocol } from '../../../domain/usecases/service/get-services'
 import { type GetServicesRepository } from '../../protocols/db/get-services-repository'
 
-export class DbGetServices implements GetServices {
+export class GetServices implements GetServicesProtocol {
   constructor (
     private readonly getServicesRepository: GetServicesRepository
   ) {}
 
-  async getAllServices (): Promise<GetServices.Result> {
+  async getAllServices (): Promise<GetServicesProtocol.Result> {
     const services = await this.getServicesRepository.getAll()
     return services
   }

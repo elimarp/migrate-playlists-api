@@ -1,9 +1,9 @@
 import { type ServiceModel } from '../../models/service'
 
-export namespace GetServices {
+export namespace GetServicesProtocol {
   export type Result = ServiceModel[]
 }
 
-export interface GetServices {
-  getAllServices (): Promise<GetServices.Result>
+export interface GetServicesProtocol {
+  getAllServices (): Promise<GetServicesProtocol.Result>
 }

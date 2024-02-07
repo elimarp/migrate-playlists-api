@@ -1,6 +1,6 @@
-import { mongodbClient } from "./mongodb-client"
-import { ServiceRepository } from "./service-repository"
 import { seedMongodbServiceCollection } from '../../../tests/seed/service'
+import { mongodbClient } from "../helpers/mongodb-helper"
+import { ServiceRepository } from "./service-repository"
 
 const services = [
   { keyword: 'spotify', name: 'Spotify', image_url: 'spotify-image-url' },

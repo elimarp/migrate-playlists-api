@@ -1,7 +1,7 @@
-import { HttpHelper, HttpHelperRequest, HttpHelperResponse } from "../http-helper"
-import { SpotifyService } from "./spotify-service"
 import * as getSpotifyUserPlaylists from '../../../../tests/mocks/http/spotify/get-user-playlists.json'
 import { MaximumValueError, MinimumValueError, MissingParamError } from "../../../utils/exceptions"
+import { HttpHelper, HttpHelperRequest, HttpHelperResponse } from "../../helpers/http-helper"
+import { SpotifyService } from "./spotify-service"
 
 interface Sut {
   sut: SpotifyService

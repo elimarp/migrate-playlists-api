@@ -17,3 +17,13 @@ export const serverError = (): HttpResponse => ({
   status: 500,
   body: { message: 'Internal server error' }
 })
+
+export const forbidden = (message?: string): HttpResponse => ({
+  status: 403,
+  body: { message: message ?? 'forbidden' }
+})
+
+export const unauthorized = (message?: string): HttpResponse => ({
+  status: 401,
+  body: { message: message ?? 'unauthorized' }
+})

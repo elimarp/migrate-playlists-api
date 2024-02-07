@@ -1,4 +1,4 @@
-import { mongodbClient } from '../../src/infra/db/mongodb-client';
+import { mongodbClient } from '../../src/infra/helpers/mongodb-helper';
 
 export const seedMongodbServiceCollection = async (services: any[]) => {
   const collection = mongodbClient.getCollection('services')

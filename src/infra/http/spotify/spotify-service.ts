@@ -1,6 +1,6 @@
-import { type GetSpotifyUserPlaylistsServiceParams, type GetSpotifyUserPlaylistsService, type GetSpotifyUserPlaylistsServiceResult } from '../../../data/protocols/http/spotify/get-user-playlists'
+import { type GetSpotifyUserPlaylistsService, type GetSpotifyUserPlaylistsServiceParams, type GetSpotifyUserPlaylistsServiceResult } from '../../../data/protocols/http/spotify/get-user-playlists'
 import { MaximumValueError, MinimumValueError, MissingParamError } from '../../../utils/exceptions'
-import { type HttpHelper } from '../http-helper'
+import { type HttpHelper } from '../../helpers/http-helper'
 import { type GetSpotifyUserPlaylistsResponseBody } from './types/get-user-playlists'
 
 export class SpotifyService implements GetSpotifyUserPlaylistsService {

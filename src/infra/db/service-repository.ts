@@ -1,6 +1,6 @@
 import { type GetServicesRepository } from '../../data/protocols/db/get-services-repository'
 import { type ServiceModel } from '../../domain/models/service'
-import { mongodbClient } from './mongodb-client'
+import { mongodbClient } from '../helpers/mongodb-helper'
 
 export class ServiceRepository implements GetServicesRepository {
   async getAll (): Promise<GetServicesRepository.Result> {
