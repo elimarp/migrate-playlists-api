@@ -2,7 +2,7 @@ import { type Collection, MongoClient } from 'mongodb'
 
 const missingClientError = new Error('you must start the connection first')
 
-class MongodbClient {
+class MongodbHelper {
   client?: MongoClient
 
   async connect (url: string): Promise<void> {
@@ -20,4 +20,4 @@ class MongodbClient {
   }
 }
 
-export const mongodbClient = new MongodbClient()
+export const mongodbClient = new MongodbHelper()
