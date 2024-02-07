@@ -1,10 +1,10 @@
-import { badRequest, forbidden, ok, serverError, unauthorized } from '../helpers/http'
-import { type HttpRequest, type HttpResponse } from '../protocols/http'
-import { type Controller } from './controller'
+import { badRequest, forbidden, ok, serverError, unauthorized } from '../../helpers/http'
+import { type HttpRequest, type HttpResponse } from '../../protocols/http'
+import { type Controller } from '../../protocols/controller'
 
-import { type GetUserPlaylistsProtocol } from '../../domain/usecases/service/get-user-playlists'
-import { type ValidateTokenProtocol } from '../../domain/usecases/security/validate-token'
-import { AccessTokenExpiredError } from '../../infra/helpers/exceptions'
+import { type GetUserPlaylistsProtocol } from '../../../domain/usecases/service/get-user-playlists'
+import { type ValidateTokenProtocol } from '../../../domain/usecases/security/validate-token'
+import { AccessTokenExpiredError } from '../../../infra/helpers/exceptions'
 
 export class GetUserPlaylistsController implements Controller {
   constructor (

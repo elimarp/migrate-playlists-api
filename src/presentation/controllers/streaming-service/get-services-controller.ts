@@ -1,7 +1,7 @@
-import { type GetServicesProtocol } from '../../domain/usecases/service/get-services'
-import { ok, serverError } from '../helpers/http'
-import { type HttpRequest, type HttpResponse } from '../protocols/http'
-import { type Controller } from './controller'
+import { type GetServicesProtocol } from '../../../domain/usecases/service/get-services'
+import { ok, serverError } from '../../helpers/http'
+import { type HttpRequest, type HttpResponse } from '../../protocols/http'
+import { type Controller } from '../../protocols/controller'
 
 export class GetServicesController implements Controller {
   constructor (private readonly getServices: GetServicesProtocol) {}

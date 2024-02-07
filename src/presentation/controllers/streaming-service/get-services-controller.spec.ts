@@ -1,4 +1,4 @@
-import { type GetServicesProtocol } from '../../domain/usecases/service/get-services'
+import { type GetServicesProtocol } from '../../../domain/usecases/service/get-services'
 import { GetServicesController } from './get-services-controller'
 
 class GetServicesStub implements GetServicesProtocol {
