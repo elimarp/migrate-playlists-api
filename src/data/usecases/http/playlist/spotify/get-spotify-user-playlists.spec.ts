@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker"
-import { makeRandomPlaylistList } from "../../../../../tests/utils/create-random-playlist-list"
-import { GetSpotifyUserPlaylistsService, GetSpotifyUserPlaylistsServiceParams, GetSpotifyUserPlaylistsServiceResult } from "../../../protocols/http/spotify/get-user-playlists"
-import { GetSpotifyUserPlaylistsUsecase } from "./get-spotify-user-playlists"
+import { makeRandomPlaylistList } from "../../../../../../tests/utils/create-random-playlist-list"
+import { GetSpotifyUserPlaylistsService, GetSpotifyUserPlaylistsServiceParams, GetSpotifyUserPlaylistsServiceResult } from "../../../../protocols/http/spotify/get-user-playlists"
+import { GetSpotifyUserPlaylists } from "./get-spotify-user-playlists"
 
 class SpotifyServiceStub implements GetSpotifyUserPlaylistsService {
   async getPlaylistsByUserId({ limit, offset }: GetSpotifyUserPlaylistsServiceParams): Promise<GetSpotifyUserPlaylistsServiceResult> {
@@ -10,14 +10,14 @@ class SpotifyServiceStub implements GetSpotifyUserPlaylistsService {
 }
 
 interface Sut {
-  sut: GetSpotifyUserPlaylistsUsecase
+  sut: GetSpotifyUserPlaylists
   spotifyServiceStub: GetSpotifyUserPlaylistsService
 }
 
 const makeSut = (): Sut => {
   const spotifyServiceStub = new SpotifyServiceStub()
   return {
-    sut: new GetSpotifyUserPlaylistsUsecase(spotifyServiceStub),
+    sut: new GetSpotifyUserPlaylists(spotifyServiceStub),
     spotifyServiceStub
   }
 }
