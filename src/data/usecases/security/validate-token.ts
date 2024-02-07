@@ -1,12 +1,9 @@
 import { type SessionModel } from '../../../domain/models/session'
+import { type ValidateTokenProtocol } from '../../../domain/usecases/security/validate-token'
 import { type JwtHelper } from '../../../infra/helpers/jwt-helper'
 import { type GetSessionRepository } from '../../protocols/db/session/get-session-repository'
 
-export interface ValidateToken {
-  validate(accessToken: string): Promise<SessionModel>
-}
-
-export class ValidateToken implements ValidateToken {
+export class ValidateToken implements ValidateTokenProtocol {
   constructor (
     private readonly jwtHelper: JwtHelper,
     private readonly getSessionRepository: GetSessionRepository

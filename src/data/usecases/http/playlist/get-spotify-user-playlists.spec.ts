@@ -37,7 +37,8 @@ describe('Get Spotify User Playlists Use Case', () => {
     const params = makeParams()
     await sut.getUserPlaylists(params)
 
-    expect(spy).toHaveBeenCalledWith(params)
+    const { serviceAccessToken: expectedAccessToken, ...expectedParams } = params
+    expect(spy).toHaveBeenCalledWith({ accessToken: expectedAccessToken, ...expectedParams })
   })
 
   test('throw when GetSpotifyUserPlaylistService throws', async () => {

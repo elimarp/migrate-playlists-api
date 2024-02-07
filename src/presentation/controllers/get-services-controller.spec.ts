@@ -30,7 +30,7 @@ describe('Get Services Controller', () => {
 
     jest.spyOn(getServicesStub, 'getAllServices')
 
-    await sut.handle({})
+    await sut.handle({ headers: {} })
 
     expect(getServicesStub.getAllServices).toHaveBeenCalledWith()
   })

@@ -1,3 +1,4 @@
+// TODO: maybe inject more than just the body?
 export interface HttpRequest<T = any> {
   body?: T
   path?: Record<string, string>

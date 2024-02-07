@@ -1,11 +1,12 @@
-import { type GetServices } from '../../domain/usecases/service/get-services'
+import { type GetServicesProtocol } from '../../domain/usecases/service/get-services'
 import { ok, serverError } from '../helpers/http'
 import { type HttpRequest, type HttpResponse } from '../protocols/http'
+import { type Controller } from './controller'
 
-export class GetServicesController {
-  constructor (private readonly getServices: GetServices) {}
+export class GetServicesController implements Controller {
+  constructor (private readonly getServices: GetServicesProtocol) {}
 
-  async handle (request: HttpRequest): Promise<HttpResponse> {
+  async handle (_request: HttpRequest): Promise<HttpResponse> {
     try {
       const services = await this.getServices.getAllServices()
       return ok({ payload: services })

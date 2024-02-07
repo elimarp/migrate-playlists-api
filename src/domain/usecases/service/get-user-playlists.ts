@@ -15,15 +15,15 @@ export interface GetUserPlaylistsResult {
     name: string
     description: string
     isPublic: boolean
+    totalTracks: number
     images: {
       height: number
       url: string
       width: number
     }[]
-    totalTracks: number
   }[]
 }
 
-export interface GetUserPlaylists {
+export interface GetUserPlaylistsProtocol {
   getUserPlaylists (params: GetUserPlaylistsParams): Promise<GetUserPlaylistsResult>
 }

@@ -1,16 +1,23 @@
 import { type HttpResponse } from '../protocols/http'
 
-interface BadRequestParams { message?: string, errors?: any[] }
-interface SuccessParams { message?: string, payload?: any[] }
+interface BadRequestResponseParams { message?: string, errors?: any[] }
+interface SuccessResponseParams { message?: string, payload?: any }
+interface SuccessListResponseParams {
+  message?: string
+  payload: any[]
+  total: number
+  limit: number
+  offset: number
+}
 
-export const badRequest = ({ message, errors }: BadRequestParams): HttpResponse => ({
+export const badRequest = ({ message, errors }: BadRequestResponseParams): HttpResponse => ({
   status: 400,
   body: { message: message ?? 'Bad request', errors: errors ?? [] }
 })
 
-export const ok = ({ message, payload }: SuccessParams): HttpResponse => ({
+export const ok = ({ message, payload, ...rest }: SuccessResponseParams | SuccessListResponseParams): HttpResponse => ({
   status: 200,
-  body: { message: message ?? 'Ok', payload: payload ?? {} }
+  body: { message: message ?? 'Ok', payload: payload ?? {}, ...rest }
 })
 
 export const serverError = (): HttpResponse => ({
