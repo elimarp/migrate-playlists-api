@@ -1,8 +1,8 @@
-import { type GetServices } from '../../domain/usecases/service/get-services'
+import { type GetServicesProtocol } from '../../domain/usecases/service/get-services'
 import { GetServicesController } from './get-services-controller'
 
-class GetServicesStub implements GetServices {
-  async getAllServices (): Promise<GetServices.Result> {
+class GetServicesStub implements GetServicesProtocol {
+  async getAllServices(): Promise<GetServicesProtocol.Result> {
     return [
       { id: 'service01', name: 'Service 01', imageUrl: 'service-01-image-url' },
       { id: 'service02', name: 'Service 02', imageUrl: 'service-02-image-url' }
@@ -12,7 +12,7 @@ class GetServicesStub implements GetServices {
 
 interface Sut {
   sut: GetServicesController
-  getServicesStub: GetServices
+  getServicesStub: GetServicesProtocol
 }
 
 const makeSut = (): Sut => {
@@ -40,7 +40,7 @@ describe('Get Services Controller', () => {
 
     jest.spyOn(getServicesStub, 'getAllServices').mockImplementationOnce(() => { throw new Error('unexpected error') })
 
-    const expected = await sut.handle({})
+    const expected = await sut.handle({ headers: {} })
 
     expect(expected.status).toBe(500)
     expect(expected.body).toEqual({ message: 'Internal server error' })
