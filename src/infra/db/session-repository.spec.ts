@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb"
 import { makeCreateSession } from "../../../tests/mocks/models/session"
 import { makeMongodbIdString } from "../../../tests/mocks/models/utils"
-import { seedMongodbCollection } from "../../../tests/seed/mongodb-collection"
+import { seedMongodbCollection } from "../../../tests/seeders/mongodb-collection"
 import { purgeCollection } from "../../../tests/utils/mongodb"
 import { mongodb } from "../helpers/mongodb-helper"
 import { SessionRepository } from "./session-repository"

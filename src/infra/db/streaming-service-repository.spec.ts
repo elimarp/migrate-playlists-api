@@ -1,5 +1,5 @@
 import { makeCreateStreamingService } from '../../../tests/mocks/models/streaming-service'
-import { seedMongodbCollection } from '../../../tests/seed/mongodb-collection'
+import { seedMongodbCollection } from '../../../tests/seeders/mongodb-collection'
 import { purgeCollection } from '../../../tests/utils/mongodb'
 import { mongodb } from "../helpers/mongodb-helper"
 import { StreamingServiceRepository } from "./streaming-service-repository"

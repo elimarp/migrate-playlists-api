@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker"
-import { makeSpotifyUserPlaylists } from "../../../../tests/mocks/service/spotify/user-playlists"
+import { makeSpotifyUserPlaylists } from "../../../../tests/mocks/services/spotify/user-playlists"
 import { SessionModel } from "../../../domain/models/session"
 import { ValidateTokenProtocol } from "../../../domain/usecases/security/validate-token"
 import { GetUserPlaylistsProtocol } from "../../../domain/usecases/streaming-service/get-user-playlists"

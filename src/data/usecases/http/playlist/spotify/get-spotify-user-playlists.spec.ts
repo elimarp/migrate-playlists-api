@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker"
-import { makeSpotifyUserPlaylists } from "../../../../../../tests/mocks/service/spotify/user-playlists"
+import { makeSpotifyUserPlaylists } from "../../../../../../tests/mocks/services/spotify/user-playlists"
 import { GetSpotifyUserPlaylistsServiceProtocol } from "../../../../protocols/http/spotify/get-user-playlists"
 import { GetSpotifyUserPlaylists } from "./get-spotify-user-playlists"
 
