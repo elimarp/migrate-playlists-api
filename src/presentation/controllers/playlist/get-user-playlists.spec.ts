@@ -7,6 +7,7 @@ import { AccessTokenExpiredError } from "../../../infra/helpers/exceptions"
 import { badRequest, forbidden, ok, serverError, unauthorized } from "../../helpers/http"
 import { HttpRequest } from "../../protocols/http"
 import { GetUserPlaylistsController } from "./get-user-playlists"
+import { makeAccessToken } from "../../../../tests/mocks/http-requests/app"
 
 interface Sut {
   sut: GetUserPlaylistsController,
@@ -55,7 +56,7 @@ const makeRequest = (): HttpRequest =>({
     userId: faker.string.alpha({ length: 20 })
   },
   headers: {
-    authorization: 'Bearer token'
+    authorization: makeAccessToken()
   }
 })
 
