@@ -1,3 +1,5 @@
+import { type ObjectId } from 'mongodb'
+
 type SessionServiceModel = {
   keyword: string
   accessToken: string
@@ -6,6 +8,15 @@ type SessionServiceModel = {
 
 export type SessionModel = {
   id: string
-  // TODO: userId: ???
+  // TODO: userId: ?
   services: SessionServiceModel[]
+}
+
+export type CreateSessionModel = {
+  // TODO: userId: ?
+  services: SessionServiceModel[]
+}
+
+export type MongodbSessionModel = Omit<SessionModel, 'id'> & {
+  _id: ObjectId
 }
