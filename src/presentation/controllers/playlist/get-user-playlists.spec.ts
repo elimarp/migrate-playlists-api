@@ -128,7 +128,7 @@ describe('Get User Playlists Controller', () => {
     expect(actual).toStrictEqual(forbidden('you are not authenticated to this service'))
   })
 
-  test('make sure usecase is called correctly', async () => {
+  test('ensure usecase is called correctly', async () => {
     const { sut, usecases, validateTokenStub } = makeSut()
 
     jest.spyOn(validateTokenStub, 'validate').mockResolvedValueOnce({
@@ -151,7 +151,7 @@ describe('Get User Playlists Controller', () => {
     expect(spied).toHaveBeenCalledWith(expectedParams)
   })
 
-  test('make sure validateToken is called correctly', async () => {
+  test('ensure validateToken is called correctly', async () => {
     const { sut, validateTokenStub } = makeSut()
 
     const spied = jest.spyOn(validateTokenStub, 'validate')
@@ -194,6 +194,8 @@ describe('Get User Playlists Controller', () => {
       images: expect.anything()
     })
   })
+  // TODO: test spotify 404
+  // TODO: test spotify 401
 
   test('return 200 with an existing userId', async () => {
     const { sut } = makeSut()

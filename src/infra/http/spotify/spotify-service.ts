@@ -23,7 +23,7 @@ export class SpotifyService implements GetSpotifyUserPlaylistsServiceProtocol {
       headers: { Authorization: `Bearer ${accessToken}` }
     })
 
-    // TODO: validate status first
+    // TODO: validate status first (401, 404)
 
     const payload = response.body.items.map(
       ({ id, name, description, images, public: isPublic, tracks: { total: totalTracks } }) =>
