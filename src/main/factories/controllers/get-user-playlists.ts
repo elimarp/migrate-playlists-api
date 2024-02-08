@@ -1,5 +1,6 @@
 import { GetSpotifyUserPlaylists } from '../../../data/usecases/http/playlist/spotify/get-spotify-user-playlists'
 import { ValidateToken } from '../../../data/usecases/security/validate-token'
+import { SessionRepository } from '../../../infra/db/session-repository'
 import { HttpHelper } from '../../../infra/helpers/http-helper'
 import { JwtHelper } from '../../../infra/helpers/jwt-helper'
 import { SpotifyService } from '../../../infra/http/spotify/spotify-service'

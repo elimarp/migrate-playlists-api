@@ -1,4 +1,4 @@
-import { type Collection, MongoClient } from 'mongodb'
+import { MongoClient, type Document, type Collection } from 'mongodb'
 
 const missingClientError = new Error('you must start the connection first')
 
@@ -14,10 +14,10 @@ class MongodbHelper {
     await this.client.close()
   }
 
-  getCollection (collectionName: string): Collection {
+  getCollection<T extends Document> (collectionName: string): Collection<T> {
     if (!this.client) throw missingClientError
-    return this.client.db().collection(collectionName)
+    return this.client.db().collection<T>(collectionName)
   }
 }
 
-export const mongodbClient = new MongodbHelper()
+export const mongodb = new MongodbHelper()

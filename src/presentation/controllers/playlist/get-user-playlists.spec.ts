@@ -1,12 +1,12 @@
 import { faker } from "@faker-js/faker"
+import { makeRandomPlaylistList } from "../../../../tests/utils/create-random-playlist-list"
+import { SessionModel } from "../../../domain/models/session"
+import { ValidateTokenProtocol } from "../../../domain/usecases/security/validate-token"
+import { GetUserPlaylistsParams, GetUserPlaylistsProtocol, GetUserPlaylistsResult } from "../../../domain/usecases/streaming-service/get-user-playlists"
+import { AccessTokenExpiredError } from "../../../infra/helpers/exceptions"
+import { badRequest, forbidden, ok, serverError, unauthorized } from "../../helpers/http"
 import { HttpRequest } from "../../protocols/http"
 import { GetUserPlaylistsController } from "./get-user-playlists"
-import { badRequest, forbidden, ok, serverError, unauthorized } from "../../helpers/http"
-import { GetUserPlaylistsProtocol, GetUserPlaylistsParams, GetUserPlaylistsResult } from "../../../domain/usecases/service/get-user-playlists"
-import { makeRandomPlaylistList } from "../../../../tests/utils/create-random-playlist-list"
-import { ValidateTokenProtocol } from "../../../domain/usecases/security/validate-token"
-import { SessionModel } from "../../../domain/models/session"
-import { AccessTokenExpiredError } from "../../../infra/helpers/exceptions"
 
 interface Sut {
   sut: GetUserPlaylistsController,
