@@ -1,6 +1,6 @@
 import { makeStreamingService } from '../../../../tests/mocks/models/streaming-service'
 import { type GetStreamingServicesProtocol } from '../../../domain/usecases/streaming-service/get-streaming-services'
-import { GetServicesController } from './get-streaming-services'
+import { GetStreamingServicesController } from './get-streaming-services'
 
 class GetStreamingServicesStub implements GetStreamingServicesProtocol {
   async getAllStreamingServices(): Promise<GetStreamingServicesProtocol.Result> {
@@ -13,7 +13,7 @@ class GetStreamingServicesStub implements GetStreamingServicesProtocol {
 }
 
 interface Sut {
-  sut: GetServicesController
+  sut: GetStreamingServicesController
   getStreamingServicesStub: GetStreamingServicesProtocol
 }
 
@@ -21,7 +21,7 @@ const makeSut = (): Sut => {
   const getStreamingServicesStub = new GetStreamingServicesStub()
 
   return {
-    sut: new GetServicesController(getStreamingServicesStub),
+    sut: new GetStreamingServicesController(getStreamingServicesStub),
     getStreamingServicesStub
   }
 }

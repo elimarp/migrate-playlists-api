@@ -1,4 +1,4 @@
-import * as getSpotifyUserPlaylists from '../../../../tests/mocks/http/spotify/get-user-playlists.json'
+import * as getSpotifyUserPlaylists from '../../../../tests/mocks/http-requests/spotify/get-user-playlists.json'
 import { MaximumValueError, MinimumValueError, MissingParamError } from "../../../utils/exceptions"
 import { HttpHelper, HttpHelperRequest, HttpHelperResponse } from "../../helpers/http-helper"
 import { SpotifyService } from "./spotify-service"

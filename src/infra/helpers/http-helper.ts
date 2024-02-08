@@ -25,6 +25,8 @@ export class HttpHelper {
       headers: params.headers
     })
 
+    // TODO: prevent axios from throwing when status' not in 200s range
+
     return {
       status: response.status,
       body: response.data

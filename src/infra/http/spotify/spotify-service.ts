@@ -1,7 +1,7 @@
 import { type GetSpotifyUserPlaylistsServiceProtocol } from '../../../data/protocols/http/spotify/get-user-playlists'
 import { MaximumValueError, MinimumValueError, MissingParamError } from '../../../utils/exceptions'
 import { type HttpHelper } from '../../helpers/http-helper'
-import { type GetSpotifyUserPlaylistsResponseBody } from './utils/protocols/get-user-playlists'
+import { type GetSpotifyUserPlaylistsResponseBody } from './protocols/get-user-playlists'
 
 export class SpotifyService implements GetSpotifyUserPlaylistsServiceProtocol {
   constructor (private readonly httpHelper: HttpHelper) { }
@@ -22,6 +22,8 @@ export class SpotifyService implements GetSpotifyUserPlaylistsServiceProtocol {
       url: `/users/${userId}/playlists?limit=${limit ?? 20}&offset=${offset ?? 0}`,
       headers: { Authorization: `Bearer ${accessToken}` }
     })
+
+    // TODO: validate status first
 
     const payload = response.body.items.map(
       ({ id, name, description, images, public: isPublic, tracks: { total: totalTracks } }) =>

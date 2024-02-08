@@ -5,12 +5,10 @@ import { HttpHelper } from '../../../infra/helpers/http-helper'
 import { JwtHelper } from '../../../infra/helpers/jwt-helper'
 import { SpotifyService } from '../../../infra/http/spotify/spotify-service'
 import { GetUserPlaylistsController } from '../../../presentation/controllers/playlist/get-user-playlists'
-
-// TODO: .env SPOTIFY_BASE_URL
-const SPOTIFY_BASE_URL = ''
+import { constants } from '../../../utils/constants'
 
 const usecases = {
-  spotify: new GetSpotifyUserPlaylists(new SpotifyService(new HttpHelper(SPOTIFY_BASE_URL)))
+  spotify: new GetSpotifyUserPlaylists(new SpotifyService(new HttpHelper(constants.http.spotify.BASE_URL)))
 }
 
 export const makeGetUserPlaylistsController = () => {

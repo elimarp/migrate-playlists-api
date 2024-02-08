@@ -3,7 +3,7 @@ import { ok, serverError } from '../../helpers/http'
 import { type Controller } from '../../protocols/controller'
 import { type HttpRequest, type HttpResponse } from '../../protocols/http'
 
-export class GetServicesController implements Controller {
+export class GetStreamingServicesController implements Controller {
   constructor (private readonly getServices: GetStreamingServicesProtocol) {}
 
   async handle (_request: HttpRequest): Promise<HttpResponse> {
