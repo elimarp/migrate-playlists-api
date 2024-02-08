@@ -1,27 +1,29 @@
-export interface GetSpotifyUserPlaylistsServiceParams {
-  userId: string
-  accessToken: string
-  limit?: number
-  offset?: number
+export interface GetSpotifyUserPlaylistsServiceProtocol {
+  getPlaylistsByUserId(params: GetSpotifyUserPlaylistsServiceProtocol.Params): Promise<GetSpotifyUserPlaylistsServiceProtocol.Result>
 }
-
-export interface GetSpotifyUserPlaylistsServiceResult {
-  total: number
-  offset: number
-  limit: number
-  payload: {
-    id: string
-    name: string
-    description: string
-    isPublic: boolean
-    images: {
-      height: number
-      url: string
-      width: number
+export namespace GetSpotifyUserPlaylistsServiceProtocol {
+  export type Params = {
+    userId: string
+    accessToken: string
+    limit?: number
+    offset?: number
+  }
+  export type Result = {
+    total: number
+    offset: number
+    limit: number
+    // TODO: create model?
+    payload: {
+      id: string
+      name: string
+      description: string
+      isPublic: boolean
+      images: {
+        height: number
+        url: string
+        width: number
+      }[]
+      totalTracks: number
     }[]
-    totalTracks: number
-  }[]
-}
-export interface GetSpotifyUserPlaylistsService {
-  getPlaylistsByUserId(params: GetSpotifyUserPlaylistsServiceParams): Promise<GetSpotifyUserPlaylistsServiceResult>
+  }
 }

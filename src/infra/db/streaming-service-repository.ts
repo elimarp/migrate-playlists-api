@@ -1,10 +1,10 @@
 import { type Collection } from 'mongodb'
 import { type GetStreamingServicesRepository } from '../../data/protocols/db/streaming-services/get-streaming-services'
-import { type StreamingServiceModel } from '../../domain/models/streaming-service'
+import { type MongodbStreamingServiceModel } from '../../domain/models/streaming-service'
 import { mongodb } from '../helpers/mongodb-helper'
 
 export class StreamingServiceRepository implements GetStreamingServicesRepository {
-  collection: Collection
+  collection: Collection<MongodbStreamingServiceModel>
 
   constructor () {
     this.collection = mongodb.getCollection(this.constructor.name)
@@ -15,7 +15,7 @@ export class StreamingServiceRepository implements GetStreamingServicesRepositor
 
     const result = services.map(
       ({ _id, ...rest }) =>
-        ({ id: String(_id), ...rest })) as unknown as StreamingServiceModel[]
+        ({ id: _id.toString(), ...rest }))
 
     return result
   }

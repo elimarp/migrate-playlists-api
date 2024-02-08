@@ -1,9 +1,7 @@
 import { faker } from '@faker-js/faker';
 
-// TODO: prolly shouldn't be here
-
-type CreateRandomPlaylistListParams = { limit?: number, offset?: number }
-export const makeRandomPlaylistList = ({ limit: limitInput, offset: offsetInput }: CreateRandomPlaylistListParams) => {
+type MakeSpotifyUserPlaylistsParams = { limit?: number, offset?: number }
+export const makeSpotifyUserPlaylists = ({ limit: limitInput, offset: offsetInput }: MakeSpotifyUserPlaylistsParams) => {
   const total = faker.number.int({ min: 0, max: 180 })
   const limit = limitInput ?? 20
   const offset = offsetInput ?? 0

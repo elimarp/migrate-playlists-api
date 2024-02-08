@@ -4,23 +4,13 @@ import { purgeCollection } from '../../../tests/utils/mongodb'
 import { mongodb } from "../helpers/mongodb-helper"
 import { StreamingServiceRepository } from "./streaming-service-repository"
 
-const creatingStreamingServices = [
-  makeCreateStreamingService(),
-  makeCreateStreamingService(),
-  makeCreateStreamingService()
-]
-
-interface Sut {
-  sut: StreamingServiceRepository
-}
-
-const makeSut = (): Sut => {
+const makeSut = () => {
   return {
     sut: new StreamingServiceRepository(),
   }
 }
 
-describe('Service Repository', () => {
+describe('Streaming Service Repository', () => {
 
   beforeAll(async () => {
     await mongodb.connect((global as any).__MONGO_URI__)
@@ -34,17 +24,21 @@ describe('Service Repository', () => {
     await purgeCollection(StreamingServiceRepository.name)
   })
 
-  test('return services successfully', async () => {
+  test('return streaming services successfully', async () => {
     const { sut } = makeSut()
 
-    await seedMongodbCollection(sut.constructor.name, creatingStreamingServices)
+    const streamingServices = [
+      makeCreateStreamingService(),
+      makeCreateStreamingService(),
+      makeCreateStreamingService()
+    ]
+
+    await seedMongodbCollection(sut.constructor.name, streamingServices)
 
     const actual = await sut.getAll();
 
-    const services = creatingStreamingServices.map(item => ({ ...item, id: expect.any(String) }))
-
-    // TODO: understand why the hell _id keeps being injected
-    const expected = services.map(({ _id, ...rest }) => rest)
+    // TODO: understand why the hell _id keeps being injected here
+    const expected = streamingServices.map(({ _id, ...item }: any) => ({ ...item, id: expect.any(String) }))
 
     expect(actual).toStrictEqual(expected)
   })

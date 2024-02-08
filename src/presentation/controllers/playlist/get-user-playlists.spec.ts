@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker"
-import { makeRandomPlaylistList } from "../../../../tests/utils/create-random-playlist-list"
+import { makeSpotifyUserPlaylists } from "../../../../tests/mocks/service/spotify/user-playlists"
 import { SessionModel } from "../../../domain/models/session"
 import { ValidateTokenProtocol } from "../../../domain/usecases/security/validate-token"
-import { GetUserPlaylistsParams, GetUserPlaylistsProtocol, GetUserPlaylistsResult } from "../../../domain/usecases/streaming-service/get-user-playlists"
+import { GetUserPlaylistsProtocol } from "../../../domain/usecases/streaming-service/get-user-playlists"
 import { AccessTokenExpiredError } from "../../../infra/helpers/exceptions"
 import { badRequest, forbidden, ok, serverError, unauthorized } from "../../helpers/http"
 import { HttpRequest } from "../../protocols/http"
@@ -15,8 +15,8 @@ interface Sut {
 }
 
 class GetUserPlaylistsStub implements GetUserPlaylistsProtocol {
-  async getUserPlaylists(params: GetUserPlaylistsParams): Promise<GetUserPlaylistsResult> {
-    return makeRandomPlaylistList({})
+  async getUserPlaylists(params: GetUserPlaylistsProtocol.Params): Promise<GetUserPlaylistsProtocol.Result> {
+    return makeSpotifyUserPlaylists({})
   }
 }
 

@@ -1,17 +1,17 @@
 import { faker } from "@faker-js/faker"
-import { makeRandomPlaylistList } from "../../../../../../tests/utils/create-random-playlist-list"
-import { GetSpotifyUserPlaylistsService, GetSpotifyUserPlaylistsServiceParams, GetSpotifyUserPlaylistsServiceResult } from "../../../../protocols/http/spotify/get-user-playlists"
+import { makeSpotifyUserPlaylists } from "../../../../../../tests/mocks/service/spotify/user-playlists"
+import { GetSpotifyUserPlaylistsServiceProtocol } from "../../../../protocols/http/spotify/get-user-playlists"
 import { GetSpotifyUserPlaylists } from "./get-spotify-user-playlists"
 
-class SpotifyServiceStub implements GetSpotifyUserPlaylistsService {
-  async getPlaylistsByUserId({ limit, offset }: GetSpotifyUserPlaylistsServiceParams): Promise<GetSpotifyUserPlaylistsServiceResult> {
-    return makeRandomPlaylistList({ limit, offset })
+class SpotifyServiceStub implements GetSpotifyUserPlaylistsServiceProtocol {
+  async getPlaylistsByUserId({ limit, offset }: GetSpotifyUserPlaylistsServiceProtocol.Params): Promise<GetSpotifyUserPlaylistsServiceProtocol.Result> {
+    return makeSpotifyUserPlaylists({ limit, offset })
   }
 }
 
 interface Sut {
   sut: GetSpotifyUserPlaylists
-  spotifyServiceStub: GetSpotifyUserPlaylistsService
+  spotifyServiceStub: GetSpotifyUserPlaylistsServiceProtocol
 }
 
 const makeSut = (): Sut => {
@@ -54,7 +54,7 @@ describe('Get Spotify User Playlists Use Case', () => {
   test('return playlists successfully', async () => {
     const { sut, spotifyServiceStub } = makeSut()
 
-    const serviceResult  = makeRandomPlaylistList({})
+    const serviceResult  = makeSpotifyUserPlaylists({})
     jest.spyOn(spotifyServiceStub, 'getPlaylistsByUserId').mockResolvedValueOnce(serviceResult)
 
     const actual = await sut.getUserPlaylists(makeParams())

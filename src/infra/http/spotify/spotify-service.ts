@@ -1,12 +1,12 @@
-import { type GetSpotifyUserPlaylistsService, type GetSpotifyUserPlaylistsServiceParams, type GetSpotifyUserPlaylistsServiceResult } from '../../../data/protocols/http/spotify/get-user-playlists'
+import { type GetSpotifyUserPlaylistsServiceProtocol } from '../../../data/protocols/http/spotify/get-user-playlists'
 import { MaximumValueError, MinimumValueError, MissingParamError } from '../../../utils/exceptions'
 import { type HttpHelper } from '../../helpers/http-helper'
 import { type GetSpotifyUserPlaylistsResponseBody } from './utils/protocols/get-user-playlists'
 
-export class SpotifyService implements GetSpotifyUserPlaylistsService {
+export class SpotifyService implements GetSpotifyUserPlaylistsServiceProtocol {
   constructor (private readonly httpHelper: HttpHelper) { }
 
-  async getPlaylistsByUserId (params: GetSpotifyUserPlaylistsServiceParams): Promise<GetSpotifyUserPlaylistsServiceResult> {
+  async getPlaylistsByUserId (params: GetSpotifyUserPlaylistsServiceProtocol.Params): Promise<GetSpotifyUserPlaylistsServiceProtocol.Result> {
     const { accessToken, userId, limit, offset } = params
     // TODO: remove all of it once I implement yup at the controller
     if (!accessToken) throw new MissingParamError('accessToken')
