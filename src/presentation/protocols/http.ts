@@ -1,7 +1,7 @@
 // TODO: maybe inject more than just the body?
-export interface HttpRequest<T = any> {
-  body?: T
-  path?: Record<string, string>
+export interface HttpRequest {
+  body?: Record<string, unknown>
+  params?: Record<string, string>
   headers: Record<string, string>
 }
 
