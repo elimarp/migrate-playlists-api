@@ -1,6 +1,5 @@
 import { type SessionModel } from '../../models/session'
 
-// TODO: rename class and interface to AccessTokenValidator
-export interface ValidateTokenProtocol {
+export interface AccessTokenValidatorProtocol {
   validate(accessToken: string): Promise<SessionModel>
 }

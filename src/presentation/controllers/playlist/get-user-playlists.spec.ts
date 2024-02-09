@@ -1,16 +1,13 @@
 import { faker } from '@faker-js/faker'
-import { makeSpotifyUserPlaylists } from '../../../../tests/mocks/services/spotify/user-playlists'
-import { type SessionModel } from '../../../domain/models/session'
-import { type ValidateTokenProtocol } from '../../../domain/usecases/security/validate-token'
-import { type GetUserPlaylistsProtocol } from '../../../domain/usecases/streaming-service/get-user-playlists'
-import { AccessTokenExpiredError } from '../../../infra/helpers/exceptions'
-import { badRequest, forbidden, ok, serverError, unauthorized, unprocessableEntity } from '../../helpers/http'
-import { GetUserPlaylistsController } from './get-user-playlists'
 import { makeAccessToken } from '../../../../tests/mocks/http-requests/app'
+import { makeSpotifyUserPlaylists } from '../../../../tests/mocks/services/spotify/user-playlists'
+import { AccessTokenValidatorStub } from '../../../../tests/unit/presentation/controllers/utils/access-token-validator'
+import { type GetUserPlaylistsProtocol } from '../../../domain/usecases/streaming-service/get-user-playlists'
+import { badRequest, forbidden, ok, serverError, unauthorized, unprocessableEntity } from '../../helpers/http'
 import { RequestValidator } from '../../helpers/request-validator'
 import { getUserPlaylistsValidation } from '../../helpers/request-validators/playlist/get-user-playlists'
-import { makeMongodbIdString } from '../../../../tests/mocks/models/utils'
 import { type HttpRequestData, type HttpRequestHeaders } from '../../protocols/http'
+import { GetUserPlaylistsController } from './get-user-playlists'
 
 class GetUserPlaylistsStub implements GetUserPlaylistsProtocol {
   async getUserPlaylists (params: GetUserPlaylistsProtocol.Params): Promise<GetUserPlaylistsProtocol.Result> {
@@ -19,25 +16,12 @@ class GetUserPlaylistsStub implements GetUserPlaylistsProtocol {
 }
 
 // TODO: gather fakers together
-class ValidateTokenStub implements ValidateTokenProtocol {
-  async validate (accessToken: string): Promise<SessionModel> {
-    return {
-      id: makeMongodbIdString(),
-      services: [
-        {
-          accessToken: faker.string.alpha({ length: 16 }),
-          keyword: 'valid-service'
-        }
-      ]
-    }
-  }
-}
 
 const makeSut = (usecases?: Record<string, GetUserPlaylistsProtocol>) => {
   const defaultUsecases = {
     'valid-service': new GetUserPlaylistsStub()
   }
-  const validateTokenStub = new ValidateTokenStub()
+  const validateTokenStub = new AccessTokenValidatorStub()
   const requestValidator = new RequestValidator(getUserPlaylistsValidation)
 
   return {
@@ -126,7 +110,7 @@ describe('Get User Playlists Controller', () => {
 
     const [data, headers] = makeRequest()
     headers.authorization = 'Bearer expired_token'
-    jest.spyOn(validateTokenStub, 'validate').mockImplementationOnce(async () => { throw new AccessTokenExpiredError() })
+    jest.spyOn(validateTokenStub, 'validate').mockImplementationOnce(validateTokenStub.implementations.expiredToken)
 
     const actual = await sut.handle(data, headers)
 

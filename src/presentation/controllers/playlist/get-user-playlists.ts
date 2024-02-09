@@ -2,7 +2,7 @@ import { badRequest, forbidden, ok, serverError, unauthorized, unprocessableEnti
 import { type Controller } from '../../protocols/controller'
 import { type HttpRequestData, type HttpRequestHeaders, type HttpResponse } from '../../protocols/http'
 
-import { type ValidateTokenProtocol } from '../../../domain/usecases/security/validate-token'
+import { type AccessTokenValidatorProtocol } from '../../../domain/usecases/security/access-token-validator'
 import { type GetUserPlaylistsProtocol } from '../../../domain/usecases/streaming-service/get-user-playlists'
 import { AccessTokenExpiredError } from '../../../infra/helpers/exceptions'
 import { RequestValidationError } from '../../helpers/exceptions/request-validation'
@@ -11,7 +11,7 @@ import { type GetUserPlaylistsRequest } from '../../protocols/requests/get-user-
 
 export class GetUserPlaylistsController implements Controller {
   constructor (
-    private readonly validateToken: ValidateTokenProtocol,
+    private readonly validateToken: AccessTokenValidatorProtocol,
     private readonly requestValidator: RequestValidatorProtocol<GetUserPlaylistsRequest>,
     private readonly usecases: Record<string, GetUserPlaylistsProtocol>
   ) {}

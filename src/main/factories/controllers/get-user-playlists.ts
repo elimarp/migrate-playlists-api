@@ -1,5 +1,5 @@
 import { GetSpotifyUserPlaylists } from '../../../data/usecases/http/playlist/spotify/get-spotify-user-playlists'
-import { ValidateToken } from '../../../data/usecases/security/validate-token'
+import { AccessTokenValidator } from '../../../data/usecases/security/access-token-validator'
 import { SessionRepository } from '../../../infra/db/session-repository'
 import { HttpHelper } from '../../../infra/helpers/http-helper'
 import { JwtHelper } from '../../../infra/helpers/jwt-helper'
@@ -17,7 +17,7 @@ const usecases = {
 
 export const makeGetUserPlaylistsController = () => {
   return new GetUserPlaylistsController(
-    new ValidateToken(new JwtHelper(), new SessionRepository()),
+    new AccessTokenValidator(new JwtHelper(), new SessionRepository()),
     new RequestValidator(getUserPlaylistsValidation),
     usecases
   )

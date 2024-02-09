@@ -1,6 +1,6 @@
 import { type VerifyOptions } from 'jsonwebtoken'
 import { JwtHelper } from '../../../infra/helpers/jwt-helper'
-import { ValidateToken } from './validate-token'
+import { AccessTokenValidator } from './access-token-validator'
 import { type GetSessionRepository } from '../../protocols/db/session/get-session-repository'
 import { type SessionModel } from '../../../domain/models/session'
 import { faker } from '@faker-js/faker'
@@ -31,7 +31,7 @@ const makeSut = () => {
   const jwtHelperStub = new JwtHelperStub()
   const sessionRepositoryStub = new SessionRepositoryStub()
   return {
-    sut: new ValidateToken(jwtHelperStub, sessionRepositoryStub),
+    sut: new AccessTokenValidator(jwtHelperStub, sessionRepositoryStub),
     jwtHelperStub,
     sessionRepositoryStub
   }
