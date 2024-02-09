@@ -1,10 +1,10 @@
-import { ObjectId } from "mongodb"
-import { makeCreateSession } from "../../../tests/mocks/models/session"
-import { makeMongodbIdString } from "../../../tests/mocks/models/utils"
-import { seedMongodbCollection } from "../../../tests/seeders/mongodb-collection"
-import { purgeCollection } from "../../../tests/utils/mongodb"
-import { mongodb } from "../helpers/mongodb-helper"
-import { SessionRepository } from "./session-repository"
+import { ObjectId } from 'mongodb'
+import { makeCreateSession } from '../../../tests/mocks/models/session'
+import { makeMongodbIdString } from '../../../tests/mocks/models/utils'
+import { seedMongodbCollection } from '../../../tests/seeders/mongodb-collection'
+import { purgeCollection } from '../../../tests/utils/mongodb'
+import { mongodb } from '../helpers/mongodb-helper'
+import { SessionRepository } from './session-repository'
 
 const makeSut = () => ({
   sut: new SessionRepository()
@@ -20,7 +20,6 @@ afterAll(async () => {
 
 describe('Session Repository', () => {
   describe('Get Session', () => {
-
     afterEach(async () => {
       await purgeCollection(SessionRepository.name)
     })
@@ -39,7 +38,7 @@ describe('Session Repository', () => {
         {
           _id: new ObjectId(secondSessionId),
           ...makeCreateSession()
-        },
+        }
       ]
       await seedMongodbCollection(sut.constructor.name, sessions)
 
@@ -61,14 +60,12 @@ describe('Session Repository', () => {
         makeCreateSession()
       ])
 
-
       const actual = await sut.getSession(targetSession._id.toString())
 
       expect(actual).toStrictEqual({
         id: targetSession._id.toString(),
         services: targetSession.services
       })
-
     })
   })
 })

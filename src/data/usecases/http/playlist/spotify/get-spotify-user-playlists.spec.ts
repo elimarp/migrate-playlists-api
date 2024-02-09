@@ -1,10 +1,10 @@
-import { faker } from "@faker-js/faker"
-import { makeSpotifyUserPlaylists } from "../../../../../../tests/mocks/services/spotify/user-playlists"
-import { GetSpotifyUserPlaylistsServiceProtocol } from "../../../../protocols/http/spotify/get-user-playlists"
-import { GetSpotifyUserPlaylists } from "./get-spotify-user-playlists"
+import { faker } from '@faker-js/faker'
+import { makeSpotifyUserPlaylists } from '../../../../../../tests/mocks/services/spotify/user-playlists'
+import { type GetSpotifyUserPlaylistsServiceProtocol } from '../../../../protocols/http/spotify/get-user-playlists'
+import { GetSpotifyUserPlaylists } from './get-spotify-user-playlists'
 
 class SpotifyServiceStub implements GetSpotifyUserPlaylistsServiceProtocol {
-  async getPlaylistsByUserId({ limit, offset }: GetSpotifyUserPlaylistsServiceProtocol.Params): Promise<GetSpotifyUserPlaylistsServiceProtocol.Result> {
+  async getPlaylistsByUserId ({ limit, offset }: GetSpotifyUserPlaylistsServiceProtocol.Params): Promise<GetSpotifyUserPlaylistsServiceProtocol.Result> {
     return makeSpotifyUserPlaylists({ limit, offset })
   }
 }
@@ -43,7 +43,7 @@ describe('Get Spotify User Playlists Use Case', () => {
 
   test('throw when GetSpotifyUserPlaylistService throws', async () => {
     const { sut, spotifyServiceStub } = makeSut()
-    
+
     const exception = new Error('certain error')
 
     jest.spyOn(spotifyServiceStub, 'getPlaylistsByUserId').mockImplementationOnce(async () => { throw exception })
@@ -54,12 +54,11 @@ describe('Get Spotify User Playlists Use Case', () => {
   test('return playlists successfully', async () => {
     const { sut, spotifyServiceStub } = makeSut()
 
-    const serviceResult  = makeSpotifyUserPlaylists({})
+    const serviceResult = makeSpotifyUserPlaylists({})
     jest.spyOn(spotifyServiceStub, 'getPlaylistsByUserId').mockResolvedValueOnce(serviceResult)
 
     const actual = await sut.getUserPlaylists(makeParams())
 
     expect(actual).toStrictEqual(serviceResult)
   })
-
 })

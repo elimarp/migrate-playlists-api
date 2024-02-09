@@ -1,8 +1,8 @@
-import { faker } from "@faker-js/faker";
-import { CreateStreamingServiceModel, StreamingServiceModel } from "../../../src/domain/models/streaming-service";
-import { makeMongodbIdString } from "./utils";
+import { faker } from '@faker-js/faker'
+import { type CreateStreamingServiceModel, type StreamingServiceModel } from '../../../src/domain/models/streaming-service'
+import { makeMongodbIdString } from './utils'
 
-export const makeStreamingServiceKeyword = () => faker.string.alpha({ casing: 'lower', length: { min: 4, max: 12 }})
+export const makeStreamingServiceKeyword = () => faker.string.alpha({ casing: 'lower', length: { min: 4, max: 12 } })
 
 export const makeCreateStreamingService = (): CreateStreamingServiceModel => ({
   imageUrl: faker.image.url(),

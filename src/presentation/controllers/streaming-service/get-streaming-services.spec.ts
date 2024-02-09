@@ -3,11 +3,11 @@ import { type GetStreamingServicesProtocol } from '../../../domain/usecases/stre
 import { GetStreamingServicesController } from './get-streaming-services'
 
 class GetStreamingServicesStub implements GetStreamingServicesProtocol {
-  async getAllStreamingServices(): Promise<GetStreamingServicesProtocol.Result> {
+  async getAllStreamingServices (): Promise<GetStreamingServicesProtocol.Result> {
     return [
       makeStreamingService(),
       makeStreamingService(),
-      makeStreamingService(),
+      makeStreamingService()
     ]
   }
 }

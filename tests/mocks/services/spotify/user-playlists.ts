@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
 type MakeSpotifyUserPlaylistsParams = { limit?: number, offset?: number }
 export const makeSpotifyUserPlaylists = ({ limit: limitInput, offset: offsetInput }: MakeSpotifyUserPlaylistsParams) => {

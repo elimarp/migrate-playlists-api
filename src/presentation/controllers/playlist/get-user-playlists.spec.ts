@@ -1,26 +1,26 @@
-import { faker } from "@faker-js/faker"
-import { makeSpotifyUserPlaylists } from "../../../../tests/mocks/services/spotify/user-playlists"
-import { SessionModel } from "../../../domain/models/session"
-import { ValidateTokenProtocol } from "../../../domain/usecases/security/validate-token"
-import { GetUserPlaylistsProtocol } from "../../../domain/usecases/streaming-service/get-user-playlists"
-import { AccessTokenExpiredError } from "../../../infra/helpers/exceptions"
-import { badRequest, forbidden, ok, serverError, unauthorized, unprocessableEntity } from "../../helpers/http"
-import { GetUserPlaylistsController } from "./get-user-playlists"
-import { makeAccessToken } from "../../../../tests/mocks/http-requests/app"
-import { RequestValidator } from "../../helpers/request-validator"
-import { getUserPlaylistsValidation } from "../../helpers/request-validators/playlist/get-user-playlists"
-import { makeMongodbIdString } from "../../../../tests/mocks/models/utils"
-import { HttpRequestData, HttpRequestHeaders } from "../../protocols/http"
+import { faker } from '@faker-js/faker'
+import { makeSpotifyUserPlaylists } from '../../../../tests/mocks/services/spotify/user-playlists'
+import { type SessionModel } from '../../../domain/models/session'
+import { type ValidateTokenProtocol } from '../../../domain/usecases/security/validate-token'
+import { type GetUserPlaylistsProtocol } from '../../../domain/usecases/streaming-service/get-user-playlists'
+import { AccessTokenExpiredError } from '../../../infra/helpers/exceptions'
+import { badRequest, forbidden, ok, serverError, unauthorized, unprocessableEntity } from '../../helpers/http'
+import { GetUserPlaylistsController } from './get-user-playlists'
+import { makeAccessToken } from '../../../../tests/mocks/http-requests/app'
+import { RequestValidator } from '../../helpers/request-validator'
+import { getUserPlaylistsValidation } from '../../helpers/request-validators/playlist/get-user-playlists'
+import { makeMongodbIdString } from '../../../../tests/mocks/models/utils'
+import { type HttpRequestData, type HttpRequestHeaders } from '../../protocols/http'
 
 class GetUserPlaylistsStub implements GetUserPlaylistsProtocol {
-  async getUserPlaylists(params: GetUserPlaylistsProtocol.Params): Promise<GetUserPlaylistsProtocol.Result> {
+  async getUserPlaylists (params: GetUserPlaylistsProtocol.Params): Promise<GetUserPlaylistsProtocol.Result> {
     return makeSpotifyUserPlaylists({})
   }
 }
 
 // TODO: gather fakers together
 class ValidateTokenStub implements ValidateTokenProtocol {
-  async validate(accessToken: string): Promise<SessionModel> {
+  async validate (accessToken: string): Promise<SessionModel> {
     return {
       id: makeMongodbIdString(),
       services: [
@@ -31,7 +31,6 @@ class ValidateTokenStub implements ValidateTokenProtocol {
       ]
     }
   }
-
 }
 
 const makeSut = (usecases?: Record<string, GetUserPlaylistsProtocol>) => {
@@ -169,7 +168,7 @@ describe('Get User Playlists Controller', () => {
 
     const expectedParams = {
       userId: data.params?.userId,
-      serviceAccessToken: 'specific-access-token',
+      serviceAccessToken: 'specific-access-token'
     }
 
     expect(spied).toHaveBeenCalledWith(expectedParams)
@@ -242,5 +241,4 @@ describe('Get User Playlists Controller', () => {
       images: expect.anything()
     })
   })
-
 })

@@ -1,7 +1,7 @@
 import * as getSpotifyUserPlaylists from '../../../../tests/mocks/http-requests/spotify/get-user-playlists.json'
-import { MaximumValueError, MinimumValueError, MissingParamError } from "../../../utils/exceptions"
-import { HttpHelper, HttpHelperRequest, HttpHelperResponse } from "../../helpers/http-helper"
-import { SpotifyService } from "./spotify-service"
+import { MaximumValueError, MinimumValueError, MissingParamError } from '../../../utils/exceptions'
+import { HttpHelper, type HttpHelperRequest, type HttpHelperResponse } from '../../helpers/http-helper'
+import { SpotifyService } from './spotify-service'
 
 interface Sut {
   sut: SpotifyService
@@ -12,17 +12,12 @@ interface Sut {
 const SPOTIFY_BASE_URL = 'https://api.spotify.com'
 
 class HttpHelperStub extends HttpHelper {
-  constructor(baseUrl: string) {
-    super(baseUrl)
-  }
-
-  async request(params: HttpHelperRequest): Promise<HttpHelperResponse<any>> {
+  async request (params: HttpHelperRequest): Promise<HttpHelperResponse<any>> {
     return {
       body: getSpotifyUserPlaylists,
       status: 200
     }
   }
-
 }
 
 const makeSut = (): Sut => {
@@ -117,7 +112,7 @@ describe('Get Spotify User Playlists Service', () => {
     expect(httpHelperSpy).toHaveBeenCalledWith({
       headers: { Authorization: `Bearer ${params.accessToken}` },
       method: 'GET',
-      url: `/users/${params.userId}/playlists?limit=${limit}&offset=${offset}`,
+      url: `/users/${params.userId}/playlists?limit=${limit}&offset=${offset}`
 
     })
   })
@@ -136,7 +131,7 @@ describe('Get Spotify User Playlists Service', () => {
         offset: 0,
         limit: 20,
         payload: expect.anything()
-      },
+      }
     )
     expect(actual.payload[0]).toEqual({
       id: expect.any(String),

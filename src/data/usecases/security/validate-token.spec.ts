@@ -1,12 +1,12 @@
-import { VerifyOptions } from "jsonwebtoken"
-import { JwtHelper } from "../../../infra/helpers/jwt-helper"
-import { ValidateToken } from "./validate-token"
-import { GetSessionRepository } from "../../protocols/db/session/get-session-repository"
-import { SessionModel } from "../../../domain/models/session"
-import { faker } from "@faker-js/faker"
+import { type VerifyOptions } from 'jsonwebtoken'
+import { JwtHelper } from '../../../infra/helpers/jwt-helper'
+import { ValidateToken } from './validate-token'
+import { type GetSessionRepository } from '../../protocols/db/session/get-session-repository'
+import { type SessionModel } from '../../../domain/models/session'
+import { faker } from '@faker-js/faker'
 
 class JwtHelperStub extends JwtHelper {
-  async decrypt(jwt: string, options?: VerifyOptions | undefined): Promise<any> {
+  async decrypt (jwt: string, options?: VerifyOptions | undefined): Promise<any> {
     return {
       todo: 'token'
     }
@@ -14,7 +14,7 @@ class JwtHelperStub extends JwtHelper {
 }
 
 class SessionRepositoryStub implements GetSessionRepository {
-  async getSession(sessionId: string): Promise<SessionModel | null> {
+  async getSession (sessionId: string): Promise<SessionModel | null> {
     return {
       id: faker.string.hexadecimal({ length: 12 }),
       services: [
@@ -25,7 +25,6 @@ class SessionRepositoryStub implements GetSessionRepository {
       ]
     }
   }
-
 }
 
 const makeSut = () => {
@@ -56,7 +55,7 @@ describe('Validate Token Use Case', () => {
   test('throw if accessToken expired', async () => {
     const { sut, jwtHelperStub } = makeSut()
 
-    jest.spyOn(jwtHelperStub, 'decrypt').mockImplementationOnce(() => { throw new Error('jwt expired')})
+    jest.spyOn(jwtHelperStub, 'decrypt').mockImplementationOnce(() => { throw new Error('jwt expired') })
 
     const accessToken = 'Bearer expired_token'
 
@@ -88,5 +87,4 @@ describe('Validate Token Use Case', () => {
       keyword: expect.any(String)
     })
   })
-
 })
