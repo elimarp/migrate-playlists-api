@@ -8,10 +8,9 @@
     "test:verbose": "jest --verbose",
     "test:dev": "jest --watchAll",
     "test": "jest --clearMocks",
-    "lint": "gts lint",
-    "clean": "gts clean",
+    "lint": "eslint './src/**/*.ts' './tests/**/*.ts'",
     "compile": "tsc",
-    "fix": "gts fix"
+    "fix": "eslint --fix './src/**/*.ts' './tests/**/*.ts'"
   },
   "keywords": [],
   "author": "",
