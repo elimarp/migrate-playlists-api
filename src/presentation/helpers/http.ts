@@ -1,6 +1,13 @@
 import { type HttpResponse } from '../protocols/http'
 
-interface BadRequestResponseParams { message?: string, errors?: any[] }
+interface BadRequestResponseParams {
+  message?: string
+  errors?: {
+    path: string
+    message: string
+    // TODO: param
+  }[]
+}
 interface SuccessResponseParams { message?: string, payload?: any }
 interface SuccessListResponseParams {
   message?: string
@@ -13,6 +20,11 @@ interface SuccessListResponseParams {
 export const badRequest = ({ message, errors }: BadRequestResponseParams): HttpResponse => ({
   status: 400,
   body: { message: message ?? 'Bad request', errors: errors ?? [] }
+})
+
+export const unprocessableEntity = ({ message }: { message?: string }): HttpResponse => ({
+  status: 422,
+  body: { message: message ?? 'Unprocessable entity' }
 })
 
 export const ok = ({ message, payload, ...rest }: SuccessResponseParams | SuccessListResponseParams): HttpResponse => ({

@@ -4,16 +4,13 @@ import { SessionModel } from "../../../domain/models/session"
 import { ValidateTokenProtocol } from "../../../domain/usecases/security/validate-token"
 import { GetUserPlaylistsProtocol } from "../../../domain/usecases/streaming-service/get-user-playlists"
 import { AccessTokenExpiredError } from "../../../infra/helpers/exceptions"
-import { badRequest, forbidden, ok, serverError, unauthorized } from "../../helpers/http"
-import { HttpRequest } from "../../protocols/http"
+import { badRequest, forbidden, ok, serverError, unauthorized, unprocessableEntity } from "../../helpers/http"
 import { GetUserPlaylistsController } from "./get-user-playlists"
 import { makeAccessToken } from "../../../../tests/mocks/http-requests/app"
-
-interface Sut {
-  sut: GetUserPlaylistsController,
-  usecases: Record<string, GetUserPlaylistsProtocol>,
-  validateTokenStub: ValidateTokenProtocol
-}
+import { RequestValidator } from "../../helpers/request-validator"
+import { getUserPlaylistsValidation } from "../../helpers/request-validators/playlist/get-user-playlists"
+import { makeMongodbIdString } from "../../../../tests/mocks/models/utils"
+import { HttpRequestData, HttpRequestHeaders } from "../../protocols/http"
 
 class GetUserPlaylistsStub implements GetUserPlaylistsProtocol {
   async getUserPlaylists(params: GetUserPlaylistsProtocol.Params): Promise<GetUserPlaylistsProtocol.Result> {
@@ -21,11 +18,11 @@ class GetUserPlaylistsStub implements GetUserPlaylistsProtocol {
   }
 }
 
-// TODO: gather these fakers together
+// TODO: gather fakers together
 class ValidateTokenStub implements ValidateTokenProtocol {
   async validate(accessToken: string): Promise<SessionModel> {
     return {
-      id: faker.string.hexadecimal({ length: 12 }),
+      id: makeMongodbIdString(),
       services: [
         {
           accessToken: faker.string.alpha({ length: 16 }),
@@ -37,70 +34,90 @@ class ValidateTokenStub implements ValidateTokenProtocol {
 
 }
 
-const makeSut = (usecases?: Record<string, GetUserPlaylistsProtocol>): Sut => {
+const makeSut = (usecases?: Record<string, GetUserPlaylistsProtocol>) => {
   const defaultUsecases = {
     'valid-service': new GetUserPlaylistsStub()
   }
   const validateTokenStub = new ValidateTokenStub()
+  const requestValidator = new RequestValidator(getUserPlaylistsValidation)
 
   return {
-    sut: new GetUserPlaylistsController(usecases ?? defaultUsecases, validateTokenStub),
+    sut: new GetUserPlaylistsController(validateTokenStub, requestValidator, usecases ?? defaultUsecases),
     validateTokenStub,
     usecases: usecases ?? defaultUsecases
   }
 }
 
-const makeRequest = (): HttpRequest =>({
-  path: {
-    serviceKeyword: 'valid-service',
+const makeRequest = (): [HttpRequestData, HttpRequestHeaders] => [{
+  params: {
+    service: 'valid-service',
     userId: faker.string.alpha({ length: 20 })
-  },
-  headers: {
-    authorization: makeAccessToken()
   }
-})
+}, {
+  authorization: makeAccessToken()
+}]
 
 describe('Get User Playlists Controller', () => {
   test('return 400 if no userId', async () => {
     const { sut } = makeSut()
 
-    const request = makeRequest()
-    delete request.path?.userId
+    const [data, headers] = makeRequest()
+    delete data.params?.userId
 
-    const actual = await sut.handle(request)
+    const actual = await sut.handle(data, headers)
 
-
-    // TODO: implement yup. refactor tests
-    expect(actual).toStrictEqual(badRequest({ message: 'missing userId' }))
+    expect(actual).toStrictEqual(badRequest({
+      message: 'Bad request',
+      errors: [
+        {
+          path: 'params.userId',
+          message: 'params.userId is a required field'
+        }
+      ]
+    }))
   })
 
-  test('return 400 if no service keyword', async () => {
+  test('return 400 if no service', async () => {
     const { sut } = makeSut()
 
-    const request = makeRequest()
-    delete request.path?.serviceKeyword
+    const [data, headers] = makeRequest()
+    delete data.params?.service
 
-    const actual = await sut.handle(request)
+    const actual = await sut.handle(data, headers)
 
-    expect(actual).toStrictEqual(badRequest({ message: 'missing service' }))
+    expect(actual).toStrictEqual(badRequest({
+      message: 'Bad request',
+      errors: [
+        {
+          path: 'params.service',
+          message: 'params.service is a required field'
+        }
+      ]
+    }))
   })
 
-  test('return 400 if can not find service usecase', async () => {
+  test('return 422 if can not find service usecase', async () => {
     const { sut } = makeSut()
 
-    const { path, ...requestRest } = makeRequest()
-    const actual = await sut.handle({ ...requestRest, path: { ...path, serviceKeyword: 'nonexistent-service' } })
+    const [{ params, ...dataRest }, headers] = makeRequest()
+    const actual = await sut.handle(
+      {
+        ...dataRest,
+        params: { ...params, service: 'nonexistent-service' }
+      },
+      headers
+    )
 
-    expect(actual).toStrictEqual(badRequest({ message: 'feature not available for this service' }))
+    expect(actual).toStrictEqual(unprocessableEntity({ message: 'feature not available for this service' }))
   })
 
   test('return 403 if no accessToken', async () => {
     const { sut } = makeSut()
 
-    const request = makeRequest()
-    delete request.headers.authorization
+    const [data, headers] = makeRequest()
+    delete headers.authorization
 
-    const actual = await sut.handle(request)
+    const actual = await sut.handle(data, headers)
 
     expect(actual).toStrictEqual(forbidden())
   })
@@ -108,11 +125,11 @@ describe('Get User Playlists Controller', () => {
   test('return 401 if accessToken expired', async () => {
     const { sut, validateTokenStub } = makeSut()
 
-    const request = makeRequest()
-    request.headers.authorization = 'Bearer expired_token'
+    const [data, headers] = makeRequest()
+    headers.authorization = 'Bearer expired_token'
     jest.spyOn(validateTokenStub, 'validate').mockImplementationOnce(async () => { throw new AccessTokenExpiredError() })
 
-    const actual = await sut.handle(request)
+    const actual = await sut.handle(data, headers)
 
     expect(actual).toStrictEqual(unauthorized('accessToken expired'))
   })
@@ -122,9 +139,15 @@ describe('Get User Playlists Controller', () => {
       'existent-but-unauthenticated-service': new GetUserPlaylistsStub()
     })
 
-    const { path, ...requestRest } = makeRequest()
+    const [{ params, ...dataRest }, headers] = makeRequest()
 
-    const actual = await sut.handle({ ...requestRest, path: { ...path, serviceKeyword: 'existent-but-unauthenticated-service' } })
+    const actual = await sut.handle(
+      {
+        ...dataRest,
+        params: { ...params, service: 'existent-but-unauthenticated-service' }
+      },
+      headers
+    )
 
     expect(actual).toStrictEqual(forbidden('you are not authenticated to this service'))
   })
@@ -141,11 +164,11 @@ describe('Get User Playlists Controller', () => {
     })
     const spied = jest.spyOn(usecases['valid-service'], 'getUserPlaylists')
 
-    const request = makeRequest()
-    await sut.handle(request)
+    const [data, headers] = makeRequest()
+    await sut.handle(data, headers)
 
     const expectedParams = {
-      userId: request.path?.userId,
+      userId: data.params?.userId,
       serviceAccessToken: 'specific-access-token',
     }
 
@@ -157,18 +180,18 @@ describe('Get User Playlists Controller', () => {
 
     const spied = jest.spyOn(validateTokenStub, 'validate')
 
-    const request = makeRequest()
-    await sut.handle(request)
+    const [data, headers] = makeRequest()
+    await sut.handle(data, headers)
 
-    expect(spied).toHaveBeenCalledWith(request.headers.authorization)
+    expect(spied).toHaveBeenCalledWith(headers.authorization)
   })
 
   test('return 500 if usecase throws uncaught error', async () => {
     const { sut, usecases } = makeSut()
 
-    jest.spyOn(usecases['valid-service'], 'getUserPlaylists').mockImplementationOnce(async () => {throw new Error('unexpected error')})
+    jest.spyOn(usecases['valid-service'], 'getUserPlaylists').mockImplementationOnce(async () => { throw new Error('unexpected error') })
 
-    const actual = await sut.handle(makeRequest())
+    const actual = await sut.handle(...makeRequest())
 
     expect(actual).toStrictEqual(serverError())
   })
@@ -176,8 +199,8 @@ describe('Get User Playlists Controller', () => {
   test('return 200 with \'me\' as userId', async () => {
     const { sut } = makeSut()
 
-    const { path, ...requestRest } = makeRequest()
-    const actual = await sut.handle({ ...requestRest, path: { ...path, userId: 'me' }})
+    const [{ params, ...dataRest }, headers] = makeRequest()
+    const actual = await sut.handle({ ...dataRest, params: { ...params, userId: 'me' } }, headers)
 
     expect(actual).toStrictEqual(ok({
       message: 'Here are your playlists',
@@ -201,7 +224,7 @@ describe('Get User Playlists Controller', () => {
   test('return 200 with an existing userId', async () => {
     const { sut } = makeSut()
 
-    const actual = await sut.handle(makeRequest())
+    const actual = await sut.handle(...makeRequest())
 
     expect(actual).toStrictEqual(ok({
       message: 'Here are your playlists',

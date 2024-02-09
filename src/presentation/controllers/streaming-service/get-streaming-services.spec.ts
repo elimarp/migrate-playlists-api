@@ -32,7 +32,7 @@ describe('Get Services Controller', () => {
 
     jest.spyOn(getStreamingServicesStub, 'getAllStreamingServices')
 
-    await sut.handle({ headers: {} })
+    await sut.handle({}, {})
 
     expect(getStreamingServicesStub.getAllStreamingServices).toHaveBeenCalledWith()
   })
@@ -42,7 +42,7 @@ describe('Get Services Controller', () => {
 
     jest.spyOn(getStreamingServicesStub, 'getAllStreamingServices').mockImplementationOnce(() => { throw new Error('unexpected error') })
 
-    const expected = await sut.handle({ headers: {} })
+    const expected = await sut.handle({}, {})
 
     expect(expected.status).toBe(500)
     expect(expected.body).toEqual({ message: 'Internal server error' })
@@ -51,7 +51,7 @@ describe('Get Services Controller', () => {
   test('return 200 if succeed', async () => {
     const { sut } = makeSut()
 
-    const actual = await sut.handle({ headers: {} });
+    const actual = await sut.handle({}, {})
 
     expect(actual.status).toBe(200)
     expect(actual.body).toEqual({

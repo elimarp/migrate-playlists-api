@@ -1,8 +1,10 @@
-// TODO: maybe inject more than just the body?
-export interface HttpRequest {
+export interface HttpRequestData {
   body?: Record<string, unknown>
   params?: Record<string, string>
-  headers: Record<string, string>
+}
+
+export interface HttpRequestHeaders {
+  authorization?: string
 }
 
 export interface HttpResponse {

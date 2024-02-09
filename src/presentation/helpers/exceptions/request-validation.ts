@@ -9,5 +9,8 @@ export class RequestValidationError extends Error {
   ) {
     super('request validation error')
     this.errors = errors.map(error => ({ path: error.path ?? '', message: error.message ?? '' }))
+    // TODO: use only the last part of the path at message
+    // (or maybe there's a smarter way to do that. take another look to what's inside yup error)
+    // maybe even return param: string
   }
 }
