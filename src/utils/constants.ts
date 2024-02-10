@@ -1,10 +1,15 @@
 import { config } from 'dotenv'
 
-const env = process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : '.env'
+const envPath = process.env.NODE_ENV && process.env.NODE_ENV !== 'development'
+  ? `.env.${process.env.NODE_ENV}`
+  : '.env'
 
-config({ path: env })
+console.log({ envPath })
 
-const required = (input: Record<string, string | undefined>): string => {
+config({ path: envPath })
+// TODO?: is this code being executed twice?
+
+const required = (input: Record<string, (string | undefined)>): string => {
   const [key, value] = Object.entries(input)[0]
   if (!value) throw new Error(`Missing environment variable '${key}'`)
   return value
