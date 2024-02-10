@@ -23,6 +23,7 @@ describe('Streaming Service Repository', () => {
     await purgeCollection(StreamingServiceRepository.name)
   })
 
+  // FIXME: it's inconsistent (happened when other test failed)
   test('return streaming services successfully', async () => {
     const { sut } = makeSut()
 

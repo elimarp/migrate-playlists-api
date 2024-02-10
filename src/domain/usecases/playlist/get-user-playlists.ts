@@ -13,7 +13,7 @@ export namespace GetUserPlaylistsProtocol {
     total: number
     offset: number
     limit: number
-    // TODO: make it a global model
+    // TODO?: make it a global model?
     payload: {
       id: string
       name: string

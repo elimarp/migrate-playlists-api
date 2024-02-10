@@ -4,20 +4,34 @@ import { type AccessTokenValidatorProtocol } from '../../../../../src/domain/use
 import { makeMongodbIdString } from '../../../../mocks/models/utils'
 import { AccessTokenExpiredError } from '../../../../../src/infra/helpers/exceptions'
 
+const makeStreamingServiceAccessToken = () => faker.string.alpha({ length: 16 })
+
 export class AccessTokenValidatorStub implements AccessTokenValidatorProtocol {
+  defaultResult = {
+    id: makeMongodbIdString(),
+    services: [
+      {
+        accessToken: makeStreamingServiceAccessToken(),
+        keyword: 'valid-streaming-service'
+      }
+    ]
+  }
+
   implementations = {
-    expiredToken: async () => { throw new AccessTokenExpiredError() }
+    expiredToken: async () => { throw new AccessTokenExpiredError() },
+    anotherStreamingService: async () => {
+      const result = { ...this.defaultResult }
+
+      result.services.push({
+        accessToken: makeStreamingServiceAccessToken(),
+        keyword: 'another-streaming-service'
+      })
+
+      return result
+    }
   }
 
   async validate (accessToken: string): Promise<SessionModel> {
-    return {
-      id: makeMongodbIdString(),
-      services: [
-        {
-          accessToken: faker.string.alpha({ length: 16 }),
-          keyword: 'valid-service'
-        }
-      ]
-    }
+    return this.defaultResult
   }
 }

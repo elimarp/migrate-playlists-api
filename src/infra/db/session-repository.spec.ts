@@ -47,6 +47,7 @@ describe('Session Repository', () => {
       expect(actual).toBeNull()
     })
 
+    // FIXME: it's inconsistent (happened when other test failed)
     it('returns session successfully', async () => {
       const { sut } = makeSut()
 

@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker'
 import { makeAccessToken } from '../../../../tests/mocks/http-requests/app'
 import { makeSpotifyUserPlaylists } from '../../../../tests/mocks/services/spotify/user-playlists'
 import { AccessTokenValidatorStub } from '../../../../tests/unit/presentation/controllers/utils/access-token-validator'
-import { type GetUserPlaylistsProtocol } from '../../../domain/usecases/streaming-service/get-user-playlists'
+import { type GetUserPlaylistsProtocol } from '../../../domain/usecases/playlist/get-user-playlists'
 import { badRequest, forbidden, ok, serverError, unauthorized, unprocessableEntity } from '../../helpers/http'
 import { RequestValidator } from '../../helpers/request-validator'
 import { getUserPlaylistsValidation } from '../../helpers/request-validators/playlist/get-user-playlists'
@@ -15,11 +15,9 @@ class GetUserPlaylistsStub implements GetUserPlaylistsProtocol {
   }
 }
 
-// TODO: gather fakers together
-
 const makeSut = (usecases?: Record<string, GetUserPlaylistsProtocol>) => {
   const defaultUsecases = {
-    'valid-service': new GetUserPlaylistsStub()
+    'valid-streaming-service': new GetUserPlaylistsStub()
   }
   const validateTokenStub = new AccessTokenValidatorStub()
   const requestValidator = new RequestValidator(getUserPlaylistsValidation)
@@ -33,7 +31,7 @@ const makeSut = (usecases?: Record<string, GetUserPlaylistsProtocol>) => {
 
 const makeRequest = (): [HttpRequestData, HttpRequestHeaders] => [{
   params: {
-    service: 'valid-service',
+    service: 'valid-streaming-service',
     userId: faker.string.alpha({ length: 20 })
   }
 }, {
@@ -79,7 +77,7 @@ describe('Get User Playlists Controller', () => {
     }))
   })
 
-  test('return 422 if can not find service usecase', async () => {
+  test('return 422 if cannot find service usecase', async () => {
     const { sut } = makeSut()
 
     const [{ params, ...dataRest }, headers] = makeRequest()
@@ -91,7 +89,7 @@ describe('Get User Playlists Controller', () => {
       headers
     )
 
-    expect(actual).toStrictEqual(unprocessableEntity({ message: 'feature not available for this service' }))
+    expect(actual).toStrictEqual(unprocessableEntity({ message: 'feature not available for this streaming service' }))
   })
 
   test('return 403 if no accessToken', async () => {
@@ -132,7 +130,7 @@ describe('Get User Playlists Controller', () => {
       headers
     )
 
-    expect(actual).toStrictEqual(forbidden('you are not authenticated to this service'))
+    expect(actual).toStrictEqual(forbidden({ message: 'you are not authenticated to this streaming service' }))
   })
 
   test('ensure usecase is called correctly', async () => {
@@ -141,11 +139,11 @@ describe('Get User Playlists Controller', () => {
     jest.spyOn(validateTokenStub, 'validate').mockResolvedValueOnce({
       id: 'any-id',
       services: [{
-        keyword: 'valid-service',
+        keyword: 'valid-streaming-service',
         accessToken: 'specific-access-token'
       }]
     })
-    const spied = jest.spyOn(usecases['valid-service'], 'getUserPlaylists')
+    const spied = jest.spyOn(usecases['valid-streaming-service'], 'getUserPlaylists')
 
     const [data, headers] = makeRequest()
     await sut.handle(data, headers)
@@ -172,7 +170,7 @@ describe('Get User Playlists Controller', () => {
   test('return 500 if usecase throws uncaught error', async () => {
     const { sut, usecases } = makeSut()
 
-    jest.spyOn(usecases['valid-service'], 'getUserPlaylists').mockImplementationOnce(async () => { throw new Error('unexpected error') })
+    jest.spyOn(usecases['valid-streaming-service'], 'getUserPlaylists').mockImplementationOnce(async () => { throw new Error('unexpected error') })
 
     const actual = await sut.handle(...makeRequest())
 

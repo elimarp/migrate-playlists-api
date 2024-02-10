@@ -3,7 +3,7 @@ import { type Controller } from '../../protocols/controller'
 import { type HttpRequestData, type HttpRequestHeaders, type HttpResponse } from '../../protocols/http'
 
 import { type AccessTokenValidatorProtocol } from '../../../domain/usecases/security/access-token-validator'
-import { type GetUserPlaylistsProtocol } from '../../../domain/usecases/streaming-service/get-user-playlists'
+import { type GetUserPlaylistsProtocol } from '../../../domain/usecases/playlist/get-user-playlists'
 import { AccessTokenExpiredError } from '../../../infra/helpers/exceptions'
 import { RequestValidationError } from '../../helpers/exceptions/request-validation'
 import { type RequestValidatorProtocol } from '../../protocols/request-validator'
@@ -24,10 +24,18 @@ export class GetUserPlaylistsController implements Controller {
       const request = await this.requestValidator.validate(data)
       const { userId, service } = request.params
 
-      if (!this.usecases[service]) return unprocessableEntity({ message: 'feature not available for this service' })
+      if (!this.usecases[service]) {
+        return unprocessableEntity({
+          message: 'feature not available for this streaming service'
+        })
+      }
 
       const sessionService = session.services.find(item => item.keyword === service)
-      if (!sessionService) return forbidden('you are not authenticated to this service')
+      if (!sessionService) {
+        return forbidden({
+          message: 'you are not authenticated to this streaming service'
+        })
+      }
 
       const { limit, offset, payload, total } = await this.usecases[service].getUserPlaylists({
         serviceAccessToken: sessionService.accessToken,
@@ -44,7 +52,7 @@ export class GetUserPlaylistsController implements Controller {
       })
     } catch (error) {
       if (error instanceof RequestValidationError) return badRequest({ errors: error.errors })
-      if (error instanceof AccessTokenExpiredError) return unauthorized('accessToken expired')
+      if (error instanceof AccessTokenExpiredError) return unauthorized()
 
       return serverError()
     }

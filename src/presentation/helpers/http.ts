@@ -37,12 +37,12 @@ export const serverError = (): HttpResponse => ({
   body: { message: 'Internal server error' }
 })
 
-export const forbidden = (message?: string): HttpResponse => ({
+export const forbidden = ({ message }: { message?: string } = {}): HttpResponse => ({
   status: 403,
   body: { message: message ?? 'forbidden' }
 })
 
-export const unauthorized = (message?: string): HttpResponse => ({
+export const unauthorized = ({ message }: { message?: string } = {}): HttpResponse => ({
   status: 401,
   body: { message: message ?? 'unauthorized' }
 })

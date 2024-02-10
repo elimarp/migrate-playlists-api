@@ -1,4 +1,4 @@
-import { type GetUserPlaylistsProtocol } from '../../../../../domain/usecases/streaming-service/get-user-playlists'
+import { type GetUserPlaylistsProtocol } from '../../../../../domain/usecases/playlist/get-user-playlists'
 import { type GetSpotifyUserPlaylistsServiceProtocol } from '../../../../protocols/http/spotify/get-user-playlists'
 
 export class GetSpotifyUserPlaylists implements GetUserPlaylistsProtocol {
