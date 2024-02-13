@@ -7,7 +7,7 @@ import { AccessTokenExpiredError } from '../../../../../src/infra/helpers/except
 const makeStreamingServiceAccessToken = () => faker.string.alpha({ length: 16 })
 
 export class AccessTokenValidatorStub implements AccessTokenValidatorProtocol {
-  defaultResult = {
+  private readonly defaultResult: SessionModel = {
     id: makeMongodbIdString(),
     services: [
       {
@@ -17,9 +17,9 @@ export class AccessTokenValidatorStub implements AccessTokenValidatorProtocol {
     ]
   }
 
-  implementations = {
+  public readonly implementations = {
     expiredToken: async () => { throw new AccessTokenExpiredError() },
-    anotherStreamingService: async () => {
+    anotherStreamingService: async (): Promise<SessionModel> => {
       const result = { ...this.defaultResult }
 
       result.services.push({
@@ -28,7 +28,16 @@ export class AccessTokenValidatorStub implements AccessTokenValidatorProtocol {
       })
 
       return result
-    }
+    },
+    specificServiceValues: async (): Promise<SessionModel> => ({
+      id: makeMongodbIdString(),
+      services: [
+        {
+          accessToken: 'specific-access-token',
+          keyword: 'specific-streaming-service'
+        }
+      ]
+    })
   }
 
   async validate (accessToken: string): Promise<SessionModel> {
