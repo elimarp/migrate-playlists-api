@@ -17,24 +17,19 @@ interface SuccessListResponseParams {
   offset: number
 }
 
-export const badRequest = ({ message, errors }: BadRequestResponseParams): HttpResponse => ({
-  status: 400,
-  body: { message: message ?? 'Bad request', errors: errors ?? [] }
-})
-
-export const unprocessableEntity = ({ message }: { message?: string }): HttpResponse => ({
-  status: 422,
-  body: { message: message ?? 'Unprocessable entity' }
-})
-
 export const ok = ({ message, payload, ...rest }: SuccessResponseParams | SuccessListResponseParams): HttpResponse => ({
   status: 200,
   body: { message: message ?? 'Ok', payload: payload ?? {}, ...rest }
 })
 
-export const serverError = (): HttpResponse => ({
-  status: 500,
-  body: { message: 'Internal server error' }
+export const badRequest = ({ message, errors }: BadRequestResponseParams): HttpResponse => ({
+  status: 400,
+  body: { message: message ?? 'Bad request', errors: errors ?? [] }
+})
+
+export const unauthorized = ({ message }: { message?: string } = {}): HttpResponse => ({
+  status: 401,
+  body: { message: message ?? 'unauthorized' }
 })
 
 export const forbidden = ({ message }: { message?: string } = {}): HttpResponse => ({
@@ -42,7 +37,17 @@ export const forbidden = ({ message }: { message?: string } = {}): HttpResponse 
   body: { message: message ?? 'forbidden' }
 })
 
-export const unauthorized = ({ message }: { message?: string } = {}): HttpResponse => ({
-  status: 401,
-  body: { message: message ?? 'unauthorized' }
+export const notFound = ({ message }: { message?: string } = {}): HttpResponse => ({
+  status: 404,
+  body: { message: message ?? 'not found' }
+})
+
+export const unprocessableEntity = ({ message }: { message?: string }): HttpResponse => ({
+  status: 422,
+  body: { message: message ?? 'Unprocessable entity' }
+})
+
+export const serverError = (): HttpResponse => ({
+  status: 500,
+  body: { message: 'Internal server error' }
 })

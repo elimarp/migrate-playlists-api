@@ -4,8 +4,6 @@ const envPath = process.env.NODE_ENV && process.env.NODE_ENV !== 'development'
   ? `.env.${process.env.NODE_ENV}`
   : '.env'
 
-console.log({ envPath })
-
 config({ path: envPath })
 // TODO?: is this code being executed twice?
 
