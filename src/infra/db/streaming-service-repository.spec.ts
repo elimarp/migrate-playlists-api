@@ -23,7 +23,7 @@ describe('Streaming Service Repository', () => {
     await purgeCollection(StreamingServiceRepository.name)
   })
 
-  // FIXME: it's inconsistent (happened when other test failed)
+  // FIXME: it's inconsistent (returning [] sometimes)
   test('return streaming services successfully', async () => {
     const { sut } = makeSut()
 
@@ -33,12 +33,16 @@ describe('Streaming Service Repository', () => {
       makeCreateStreamingService()
     ]
 
+    // console.log({ streamingServices })
+
     await seedMongodbCollection(sut.constructor.name, streamingServices)
 
     const actual = await sut.getAll()
 
     // TODO: understand why the hell _id keeps being injected here
     const expected = streamingServices.map(({ _id, ...item }: any) => ({ ...item, id: expect.any(String) }))
+
+    // console.log({ expected })
 
     expect(actual).toStrictEqual(expected)
   })

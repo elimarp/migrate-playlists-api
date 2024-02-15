@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import { faker } from '@faker-js/faker'
 import { makeAccessToken } from '../../../../tests/mocks/http-requests/app'
+import { makePlaylist } from '../../../../tests/mocks/models/playlist'
 import { AccessTokenValidatorStub } from '../../../../tests/unit/presentation/controllers/utils/access-token-validator'
+import { PlaylistNotFoundError } from '../../../domain/usecases/playlist/exceptions'
+import { type GetPlaylistProtocol } from '../../../domain/usecases/playlist/get-playlist'
 import { badRequest, forbidden, notFound, ok, serverError, unauthorized, unprocessableEntity } from '../../helpers/http'
 import { RequestValidator } from '../../helpers/request-validator'
 import { getPlaylistValidation } from '../../helpers/request-validators/playlist/get-playlist'
 import { type HttpRequestData, type HttpRequestHeaders } from '../../protocols/http'
 import { GetPlaylistController } from './get-playlist'
-import { type GetPlaylistProtocol } from '../../../domain/usecases/playlist/get-playlist'
-import { PlaylistNotFoundError } from '../../../domain/usecases/playlist/exceptions'
 
 type Replacing = {
   service?: any
@@ -33,29 +34,7 @@ const makeRequest = (replacing?: Replacing): [HttpRequestData, HttpRequestHeader
 
 class GetPlaylistStub implements GetPlaylistProtocol {
   async getPlaylist (params: GetPlaylistProtocol.Params): Promise<GetPlaylistProtocol.Result> {
-    return {
-      id: faker.string.uuid(),
-      description: faker.lorem.sentence(),
-      images: [
-        { height: 480, width: 640, url: faker.image.url() }
-      ],
-      isPublic: true,
-      name: faker.word.noun(),
-      tracks: [
-        {
-          id: faker.string.uuid(),
-          name: faker.music.songName(),
-          addedAt: faker.date.past({ years: 5 }),
-          album: {
-            id: faker.string.uuid(),
-            name: faker.word.verb()
-          },
-          artists: [
-            { id: faker.string.uuid(), name: faker.person.fullName() }
-          ]
-        }
-      ]
-    }
+    return makePlaylist()
   }
 }
 
@@ -231,7 +210,6 @@ describe('Get Playlist Controller', () => {
       name: expect.any(String),
       description: expect.any(String),
       isPublic: expect.any(Boolean),
-      // double check `arrayContaining`s are working properly
       images: expect.arrayContaining([
         {
           height: expect.any(Number),

@@ -199,7 +199,7 @@ describe('Get User Playlists Controller', () => {
       images: expect.anything()
     })
   })
-  // TODO: test spotify 404
+  // TODO: test spotify 404?
   // TODO: test spotify 401
 
   test('return 200 with an existing userId', async () => {

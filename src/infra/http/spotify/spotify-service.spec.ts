@@ -1,30 +1,33 @@
+import { faker } from '@faker-js/faker'
+import * as getSpotifyPlaylist from '../../../../tests/mocks/http-requests/spotify/get-playlist.json'
 import * as getSpotifyUserPlaylists from '../../../../tests/mocks/http-requests/spotify/get-user-playlists.json'
+import { makeStreamingServiceAccessToken } from '../../../../tests/mocks/models/streaming-service'
+import { constants } from '../../../utils/constants'
 import { MaximumValueError, MinimumValueError, MissingParamError } from '../../../utils/exceptions'
 import { HttpHelper, type HttpHelperRequest, type HttpHelperResponse } from '../../helpers/http-helper'
+import { SpotifyExpiredTokenError, SpotifyPlaylistNotFoundError, SpotifyUnexpectedError } from './protocols/exceptions'
 import { SpotifyService } from './spotify-service'
-
-interface Sut {
-  sut: SpotifyService
-  httpHelper: HttpHelper
-}
-
-// TODO: .env
-const SPOTIFY_BASE_URL = 'https://api.spotify.com'
 
 class HttpHelperStub extends HttpHelper {
   async request (params: HttpHelperRequest): Promise<HttpHelperResponse<any>> {
+    if (params.method === 'GET' && params.url.match(/\/users\/.*\/playlists/)) {
+      return {
+        body: getSpotifyUserPlaylists,
+        status: 200
+      }
+    }
     return {
-      body: getSpotifyUserPlaylists,
+      body: getSpotifyPlaylist,
       status: 200
     }
   }
 }
 
-const makeSut = (): Sut => {
-  const httpHelper = new HttpHelperStub(SPOTIFY_BASE_URL)
+const makeSut = () => {
+  const httpHelperStub = new HttpHelperStub(constants.http.spotify.BASE_URL)
   return {
-    sut: new SpotifyService(httpHelper),
-    httpHelper
+    sut: new SpotifyService(httpHelperStub),
+    httpHelperStub
   }
 }
 
@@ -97,8 +100,8 @@ describe('Get Spotify User Playlists Service', () => {
   })
 
   test('make sure httpClient.request is called correctly', async () => {
-    const { sut, httpHelper } = makeSut()
-    const httpHelperSpy = jest.spyOn(httpHelper, 'request')
+    const { sut, httpHelperStub } = makeSut()
+    const httpHelperSpy = jest.spyOn(httpHelperStub, 'request')
 
     const params = {
       userId: 'me',
@@ -144,4 +147,104 @@ describe('Get Spotify User Playlists Service', () => {
   })
 
   // TODO: test throw new spotify token expired
+})
+
+describe('Get Spotify Playlist Service', () => {
+  const makeParams = () => ({
+    accessToken: makeStreamingServiceAccessToken(),
+    playlistId: faker.string.uuid()
+  })
+
+  it('ensures httpClient is called correctly', async () => {
+    const { sut, httpHelperStub } = makeSut()
+
+    const spied = jest.spyOn(httpHelperStub, 'request')
+
+    const params = makeParams()
+
+    await sut.getPlaylist(params)
+
+    expect(spied).toHaveBeenCalledWith({
+      method: 'GET',
+      url: `/playlists/${params.playlistId}`,
+      headers: { Authorization: `Bearer ${params.accessToken}` }
+    })
+  })
+
+  it('throws SpotifyExpiredTokenError when response status is 401', async () => {
+    const { sut, httpHelperStub } = makeSut()
+
+    jest.spyOn(httpHelperStub, 'request').mockImplementationOnce(async () => ({
+      status: 401,
+      body: {}
+    }))
+
+    const params = { accessToken: 'invalid-access-token', playlistId: 'any-id' }
+
+    expect(sut.getPlaylist(params)).rejects.toEqual(new SpotifyExpiredTokenError())
+  })
+
+  it('throws SpotifyPlaylistNotFoundError when response status is 404', async () => {
+    const { sut, httpHelperStub } = makeSut()
+
+    jest.spyOn(httpHelperStub, 'request').mockImplementationOnce(async () => ({
+      status: 404,
+      body: {}
+    }))
+
+    const params = makeParams()
+
+    expect(sut.getPlaylist(params)).rejects.toEqual(new SpotifyPlaylistNotFoundError())
+  })
+
+  it('throws SpotifyUnexpectedError when status is not 200', async () => {
+    const { sut, httpHelperStub } = makeSut()
+
+    const failStatus = [400, 403, 422, 409, 500]
+    const expectedStatus = failStatus[faker.number.int({ min: 0, max: failStatus.length - 1 })]
+
+    jest.spyOn(httpHelperStub, 'request').mockImplementationOnce(async () => ({
+      status: expectedStatus,
+      body: {}
+    }))
+
+    const params = makeParams()
+
+    expect(sut.getPlaylist(params)).rejects.toEqual(new SpotifyUnexpectedError(expectedStatus))
+  })
+
+  it('returns playlist successfully', async () => {
+    const { sut } = makeSut()
+
+    const actual = await sut.getPlaylist(makeParams())
+
+    expect(actual).toStrictEqual({
+      id: expect.any(String),
+      name: expect.any(String),
+      description: expect.any(String),
+      isPublic: expect.any(Boolean),
+      images: expect.arrayContaining([
+        {
+          height: expect.any(Number),
+          url: expect.any(String),
+          width: expect.any(Number)
+        }
+      ]),
+      tracks: expect.arrayContaining([{
+        id: expect.any(String),
+        name: expect.any(String),
+        addedAt: expect.any(Date),
+        album: {
+          id: expect.any(String),
+          name: expect.any(String)
+        },
+        artists: expect.arrayContaining([{
+          id: expect.any(String),
+          name: expect.any(String)
+        }])
+      }])
+    })
+  })
+
+  // it('', async () => {})
 })
