@@ -1,10 +1,42 @@
+import { type GetSpotifyPlaylistServiceProtocol } from '../../../data/protocols/http/spotify/get-playlist'
 import { type GetSpotifyUserPlaylistsServiceProtocol } from '../../../data/protocols/http/spotify/get-user-playlists'
 import { MaximumValueError, MinimumValueError, MissingParamError } from '../../../utils/exceptions'
 import { type HttpHelper } from '../../helpers/http-helper'
+import { SpotifyExpiredTokenError, SpotifyPlaylistNotFoundError, SpotifyUnexpectedError } from './protocols/exceptions'
+import { type GetSpotifyPlaylistResponseBody } from './protocols/get-playlist'
 import { type GetSpotifyUserPlaylistsResponseBody } from './protocols/get-user-playlists'
 
-export class SpotifyService implements GetSpotifyUserPlaylistsServiceProtocol {
+export class SpotifyService implements GetSpotifyUserPlaylistsServiceProtocol, GetSpotifyPlaylistServiceProtocol {
   constructor (private readonly httpHelper: HttpHelper) { }
+
+  async getPlaylist (params: GetSpotifyPlaylistServiceProtocol.Params): Promise<GetSpotifyPlaylistServiceProtocol.Result> {
+    const response = await this.httpHelper.request<GetSpotifyPlaylistResponseBody>({
+      method: 'GET',
+      url: `/playlists/${params.playlistId}`,
+      headers: { Authorization: `Bearer ${params.accessToken}` }
+    })
+
+    if (response.status === 401) throw new SpotifyExpiredTokenError()
+    if (response.status === 404) throw new SpotifyPlaylistNotFoundError()
+    if (response.status !== 200) throw new SpotifyUnexpectedError(response.status)
+
+    const { id, name, description, public: isPublic, images, tracks } = response.body
+
+    return {
+      id,
+      name,
+      description,
+      isPublic,
+      images,
+      tracks: tracks.items.map(({ track: { id, name, album, artists }, added_at: addedAt }) => ({
+        id,
+        name,
+        album: { id: album.id, name: album.name },
+        artists: artists.map(({ id, name }) => ({ id, name })),
+        addedAt: new Date(addedAt)
+      }))
+    }
+  }
 
   async getPlaylistsByUserId (params: GetSpotifyUserPlaylistsServiceProtocol.Params): Promise<GetSpotifyUserPlaylistsServiceProtocol.Result> {
     const { accessToken, userId, limit, offset } = params
