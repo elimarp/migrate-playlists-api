@@ -10,7 +10,6 @@ export type HttpHelperResponse<T> = {
   status: number
   body: T
 }
-
 export class HttpHelper {
   private readonly axios: Axios
 
@@ -26,6 +25,7 @@ export class HttpHelper {
     })
 
     // TODO: prevent axios from throwing when status' not in 200s range
+    // TODO: throw only when timeout
 
     return {
       status: response.status,

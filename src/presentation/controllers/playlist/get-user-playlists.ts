@@ -54,6 +54,7 @@ export class GetUserPlaylistsController implements Controller {
       if (error instanceof RequestValidationError) return badRequest({ errors: error.errors })
       if (error instanceof AccessTokenExpiredError) return unauthorized()
 
+      // TODO: logger
       return serverError()
     }
   }
