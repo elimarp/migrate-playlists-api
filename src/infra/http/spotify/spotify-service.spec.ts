@@ -24,7 +24,7 @@ class HttpHelperStub extends HttpHelper {
 }
 
 const makeSut = () => {
-  const httpHelperStub = new HttpHelperStub(constants.http.spotify.BASE_URL)
+  const httpHelperStub = new HttpHelperStub(constants.external.spotify.BASE_URL)
   return {
     sut: new SpotifyService(httpHelperStub),
     httpHelperStub
