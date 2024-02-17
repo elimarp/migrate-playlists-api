@@ -5,6 +5,8 @@ export type StreamingServiceModel = {
   keyword: string
   name: string
   imageUrl: string
+  oauthUrl: string // TODO: include redirect_url; include state (random string 16); include scopes
+  // TODO: read more about STATE (how to validate?)
 }
 
 export type CreateStreamingServiceModel = {

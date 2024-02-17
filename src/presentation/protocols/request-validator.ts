@@ -1,5 +1,5 @@
 import { type HttpRequestData } from './http'
 
 export interface RequestValidatorProtocol<T = Record<string, unknown>> {
-  validate(params: HttpRequestData): Promise<T>
+  validate(data: HttpRequestData): Promise<T>
 }

@@ -1,6 +1,7 @@
 export interface HttpRequestData {
   body?: Record<string, unknown>
   params?: Record<string, string>
+  query?: Record<string, string>
 }
 
 export interface HttpRequestHeaders {

@@ -1,5 +1,5 @@
-import { type ObjectSchema, object, string } from 'yup'
-import { type GetPlaylistRequest } from '../../../protocols/requests/get-playlist'
+import { object, string, type ObjectSchema } from 'yup'
+import { type GetPlaylistRequest } from '../../protocols/requests/get-playlist'
 
 export const getPlaylistValidation: ObjectSchema<GetPlaylistRequest> = object({
   params: object({
