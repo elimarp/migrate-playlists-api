@@ -10,6 +10,8 @@ export type HttpHelperResponse<T> = {
   status: number
   body: T
 }
+
+// TODO: interface segregation
 export class HttpHelper {
   private readonly axios: Axios
 

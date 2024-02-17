@@ -1,6 +1,8 @@
+import { type StreamingService } from '../../../domain/models/streaming-service'
+
 export interface CreateTokenRequest {
   query: {
-    service: string
+    service: StreamingService
     code: string
   }
 }

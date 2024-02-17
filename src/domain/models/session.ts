@@ -3,7 +3,8 @@ import { type ObjectId } from 'mongodb'
 type SessionServiceModel = {
   keyword: string
   accessToken: string
-  // TODO: refreshToken?: string
+  expiresIn: number
+  refreshToken?: string
 }
 
 export type SessionModel = {

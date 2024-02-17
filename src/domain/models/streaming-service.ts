@@ -1,5 +1,7 @@
 import { type ObjectId } from 'mongodb'
 
+export type StreamingService = 'spotify' // NOTE: feed
+
 export type StreamingServiceModel = {
   id: string
   keyword: string

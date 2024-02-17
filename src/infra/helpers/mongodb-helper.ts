@@ -2,6 +2,7 @@ import { MongoClient, type Document, type Collection } from 'mongodb'
 
 const missingClientError = new Error('you must start the connection first')
 
+// TODO: interface segregation
 class MongodbHelper {
   client?: MongoClient
 

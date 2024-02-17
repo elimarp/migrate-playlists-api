@@ -13,15 +13,30 @@ const required = (input: Record<string, (string | undefined)>): string => {
   return value
 }
 
-const { NODE_ENV, SPOTIFY_API_BASE_URL } = process.env
+const {
+  NODE_ENV,
+  CALLBACK_BASE_URL,
+  SPOTIFY_API_BASE_URL,
+  SPOTIFY_CLIENT_ID,
+  SPOTIFY_CLIENT_SECRET,
+  JWT_SECRET
+} = process.env
 
 export const constants = {
   app: {
-    NODE_ENV: NODE_ENV ?? 'development'
+    NODE_ENV: NODE_ENV ?? 'development',
+    jwt: {
+      SECRET: required({ JWT_SECRET })
+    },
+    callback: {
+      BASE_URL: required({ CALLBACK_BASE_URL })
+    }
   },
-  http: {
+  external: {
     spotify: {
-      BASE_URL: required({ SPOTIFY_API_BASE_URL })
+      BASE_URL: required({ SPOTIFY_API_BASE_URL }),
+      CLIENT_ID: required({ SPOTIFY_CLIENT_ID }),
+      CLIENT_SECRET: required({ SPOTIFY_CLIENT_SECRET })
     }
   },
   database: {
