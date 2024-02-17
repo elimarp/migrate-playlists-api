@@ -5,9 +5,9 @@ import { AccessTokenValidatorStub } from '../../../../tests/unit/presentation/co
 import { type GetUserPlaylistsProtocol } from '../../../domain/usecases/playlist/get-user-playlists'
 import { badRequest, forbidden, ok, serverError, unauthorized, unprocessableEntity } from '../../helpers/http'
 import { RequestValidator } from '../../helpers/request-validator'
-import { getUserPlaylistsValidation } from '../../helpers/request-validators/playlist/get-user-playlists'
 import { type HttpRequestData, type HttpRequestHeaders } from '../../protocols/http'
 import { GetUserPlaylistsController } from './get-user-playlists'
+import { getUserPlaylistsValidation } from '../../validators/playlist/get-user-playlists'
 
 class GetUserPlaylistsStub implements GetUserPlaylistsProtocol {
   async getUserPlaylists (params: GetUserPlaylistsProtocol.Params): Promise<GetUserPlaylistsProtocol.Result> {

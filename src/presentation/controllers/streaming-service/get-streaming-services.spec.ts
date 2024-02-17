@@ -12,12 +12,7 @@ class GetStreamingServicesStub implements GetStreamingServicesProtocol {
   }
 }
 
-interface Sut {
-  sut: GetStreamingServicesController
-  getStreamingServicesStub: GetStreamingServicesProtocol
-}
-
-const makeSut = (): Sut => {
+const makeSut = () => {
   const getStreamingServicesStub = new GetStreamingServicesStub()
 
   return {

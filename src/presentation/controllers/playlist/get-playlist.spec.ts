@@ -7,8 +7,8 @@ import { PlaylistNotFoundError } from '../../../domain/usecases/playlist/excepti
 import { type GetPlaylistProtocol } from '../../../domain/usecases/playlist/get-playlist'
 import { badRequest, forbidden, notFound, ok, serverError, unauthorized, unprocessableEntity } from '../../helpers/http'
 import { RequestValidator } from '../../helpers/request-validator'
-import { getPlaylistValidation } from '../../helpers/request-validators/playlist/get-playlist'
 import { type HttpRequestData, type HttpRequestHeaders } from '../../protocols/http'
+import { getPlaylistValidation } from '../../validators/playlist/get-playlist'
 import { GetPlaylistController } from './get-playlist'
 
 type Replacing = {
