@@ -1,23 +1,34 @@
 import { faker } from '@faker-js/faker'
 import * as getSpotifyPlaylist from '../../../../tests/mocks/http-requests/spotify/get-playlist.json'
 import * as getSpotifyUserPlaylists from '../../../../tests/mocks/http-requests/spotify/get-user-playlists.json'
+import * as createSpotifyAccessToken from '../../../../tests/mocks/http-requests/spotify/create-token.json'
 import { makeStreamingServiceAccessToken } from '../../../../tests/mocks/models/streaming-service'
 import { constants } from '../../../utils/constants'
 import { MaximumValueError, MinimumValueError, MissingParamError } from '../../../utils/exceptions'
 import { HttpHelper, type HttpHelperRequest, type HttpHelperResponse } from '../../helpers/http-helper'
 import { SpotifyExpiredTokenError, SpotifyPlaylistNotFoundError, SpotifyUnexpectedError } from './protocols/exceptions'
 import { SpotifyService } from './spotify-service'
-
+import * as qs from 'node:querystring'
 class HttpHelperStub extends HttpHelper {
   async request (params: HttpHelperRequest): Promise<HttpHelperResponse<any>> {
-    if (params.method === 'GET' && params.url.match(/\/users\/.*\/playlists/)) {
+    const getSpotifyUserPlaylistsEndpointRegex = /\/users\/.*\/playlists/
+    const getSpotifyPlaylistEndpointRegex = /\/playlists\/.*/
+    // const createSpotifyTokenEndpointRegex = /\/token/
+
+    if (params.method === 'GET' && params.url.match(getSpotifyUserPlaylistsEndpointRegex)) {
       return {
         body: getSpotifyUserPlaylists,
         status: 200
       }
     }
+    if (params.method === 'GET' && params.url.match(getSpotifyPlaylistEndpointRegex)) {
+      return {
+        body: getSpotifyPlaylist,
+        status: 200
+      }
+    }
     return {
-      body: getSpotifyPlaylist,
+      body: createSpotifyAccessToken,
       status: 200
     }
   }
@@ -247,4 +258,71 @@ describe('Get Spotify Playlist Service', () => {
   })
 
   // it('', async () => {})
+})
+
+describe('Create Spotify Access Token Service', () => {
+  const makeParams = () => ({
+    clientId: 'CLIENT_ID',
+    clientSecret: 'CLIENT_SECRET',
+    code: 'any-code',
+    redirectUri: 'redirect-uri'
+  })
+
+  it('ensures httpClient is called correctly', async () => {
+    const { sut, httpHelperStub } = makeSut()
+
+    const spied = jest.spyOn(httpHelperStub, 'request')
+
+    const params = makeParams()
+
+    await sut.createAccessToken(params)
+
+    expect(spied).toHaveBeenCalledWith({
+      method: 'POST',
+      url: '/token',
+      body: qs.stringify({
+        code: params.code,
+        redirect_uri: params.redirectUri,
+        grant_type: 'authorization_code'
+      }),
+      auth: {
+        username: params.clientId,
+        password: params.clientSecret
+      },
+      headers: { 'content-type': 'application/x-www-form-urlencoded' }
+    })
+  })
+
+  it('throws if Spotify response status is not 200', async () => {
+    const { sut, httpHelperStub } = makeSut()
+
+    const failStatus = [400, 403, 422, 409, 500]
+    const expectedStatus = failStatus[faker.number.int({ min: 0, max: failStatus.length - 1 })]
+
+    jest.spyOn(httpHelperStub, 'request').mockImplementationOnce(async () => ({
+      status: expectedStatus,
+      body: {}
+    }))
+
+    const params = {
+      clientId: 'CLIENT_ID',
+      clientSecret: 'CLIENT_SECRET',
+      code: 'invalid-code',
+      redirectUri: 'redirect-uri'
+    }
+
+    expect(sut.createAccessToken(params)).rejects.toEqual(new SpotifyUnexpectedError(expectedStatus))
+  })
+
+  it('returns data successfully', async () => {
+    const { sut } = makeSut()
+
+    const actual = await sut.createAccessToken(makeParams())
+
+    expect(actual).toStrictEqual({
+      accessToken: createSpotifyAccessToken.access_token,
+      refreshToken: createSpotifyAccessToken.refresh_token,
+      expiresIn: createSpotifyAccessToken.expires_in
+    })
+  })
 })
