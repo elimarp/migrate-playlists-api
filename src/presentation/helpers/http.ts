@@ -9,6 +9,7 @@ interface BadRequestResponseParams {
   }[]
 }
 interface SuccessResponseParams { message?: string, payload?: any }
+interface CreatedResponseParams { message?: string, payload?: any }
 interface SuccessListResponseParams {
   message?: string
   payload: any[]
@@ -20,6 +21,11 @@ interface SuccessListResponseParams {
 export const ok = ({ message, payload, ...rest }: SuccessResponseParams | SuccessListResponseParams): HttpResponse => ({
   status: 200,
   body: { message: message ?? 'Ok', payload: payload ?? {}, ...rest }
+})
+
+export const created = ({ message, payload }: CreatedResponseParams): HttpResponse => ({
+  status: 201,
+  body: { message: message ?? 'Created', payload: payload ?? {} }
 })
 
 export const badRequest = ({ message, errors }: BadRequestResponseParams): HttpResponse => ({

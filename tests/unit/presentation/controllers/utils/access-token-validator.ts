@@ -4,7 +4,8 @@ import { type AccessTokenValidatorProtocol } from '../../../../../src/domain/use
 import { makeMongodbIdString } from '../../../../mocks/models/utils'
 import { AccessTokenExpiredError } from '../../../../../src/infra/helpers/exceptions'
 
-const makeStreamingServiceAccessToken = () => faker.string.alpha({ length: 16 })
+// TODO: export somewhere else
+export const makeStreamingServiceAccessToken = () => faker.string.alpha({ length: 16 })
 
 export class AccessTokenValidatorStub implements AccessTokenValidatorProtocol {
   private readonly defaultResult: SessionModel = {

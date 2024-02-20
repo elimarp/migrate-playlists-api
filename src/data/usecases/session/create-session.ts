@@ -39,7 +39,7 @@ export class CreateSession implements CreateSessionProtocol {
       ]
     })
 
-    const expiresIn = 24 * 60 * 60 // 24h
+    const expiresIn = 60 * 60 * 24 // 24h
 
     const jwt = await this.encryptJwt.encrypt({ id: session.id }, {
       expiresIn

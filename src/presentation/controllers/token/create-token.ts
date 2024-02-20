@@ -2,7 +2,11 @@ import { type CreateSessionProtocol } from '../../../domain/usecases/session/cre
 import { RequestValidationError } from '../../helpers/exceptions/request-validation'
 import { badRequest, ok, serverError } from '../../helpers/http'
 import { type Controller } from '../../protocols/controller'
-import { type HttpRequestData, type HttpRequestHeaders, type HttpResponse } from '../../protocols/http'
+import {
+  type HttpRequestData,
+  type HttpRequestHeaders,
+  type HttpResponse
+} from '../../protocols/http'
 import { type RequestValidatorProtocol } from '../../protocols/request-validator'
 import { type CreateTokenRequest } from '../../protocols/requests/create-token'
 
@@ -12,6 +16,7 @@ export class CreateTokenController implements Controller {
     private readonly requestValidator: RequestValidatorProtocol<CreateTokenRequest>
   ) {}
 
+  // TODO: NEITHER CODE OR SERVICE SHOULD BE A QUERY PARAM
   async handle (data: HttpRequestData, headers: HttpRequestHeaders): Promise<HttpResponse> {
     try {
       const request = await this.requestValidator.validate(data)
