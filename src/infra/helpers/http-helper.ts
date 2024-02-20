@@ -1,9 +1,11 @@
-import { Axios, type RawAxiosRequestHeaders, type Method } from 'axios'
+import { Axios, type RawAxiosRequestHeaders, type Method, type AxiosBasicCredentials } from 'axios'
 
 export type HttpHelperRequest = {
   method: Method
   url: string
   headers?: RawAxiosRequestHeaders
+  body?: Record<string, any> | string
+  auth?: AxiosBasicCredentials
 }
 
 export type HttpHelperResponse<T> = {
@@ -23,7 +25,9 @@ export class HttpHelper {
     const response = await this.axios.request<ResponseBody>({
       method: params.method,
       url: params.url,
-      headers: params.headers
+      headers: params.headers,
+      data: params.body,
+      auth: params.auth
     })
 
     // TODO: prevent axios from throwing when status' not in 200s range

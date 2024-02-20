@@ -1,13 +1,42 @@
+import { type CreateSpotifyAccessTokenServiceProtocol } from '../../../data/protocols/http/spotify/create-spotify-access-token'
 import { type GetSpotifyPlaylistServiceProtocol } from '../../../data/protocols/http/spotify/get-playlist'
 import { type GetSpotifyUserPlaylistsServiceProtocol } from '../../../data/protocols/http/spotify/get-user-playlists'
 import { MaximumValueError, MinimumValueError, MissingParamError } from '../../../utils/exceptions'
 import { type HttpHelper } from '../../helpers/http-helper'
+import { type CreateSpotifyAccessTokenResponseBody } from './protocols/create-token'
 import { SpotifyExpiredTokenError, SpotifyPlaylistNotFoundError, SpotifyUnexpectedError } from './protocols/exceptions'
 import { type GetSpotifyPlaylistResponseBody } from './protocols/get-playlist'
 import { type GetSpotifyUserPlaylistsResponseBody } from './protocols/get-user-playlists'
-
-export class SpotifyService implements GetSpotifyUserPlaylistsServiceProtocol, GetSpotifyPlaylistServiceProtocol {
+import * as qs from 'node:querystring'
+export class SpotifyService implements GetSpotifyUserPlaylistsServiceProtocol, GetSpotifyPlaylistServiceProtocol, CreateSpotifyAccessTokenServiceProtocol {
   constructor (private readonly httpHelper: HttpHelper) { }
+
+  async createAccessToken (params: CreateSpotifyAccessTokenServiceProtocol.Params): Promise<CreateSpotifyAccessTokenServiceProtocol.Result> {
+    const response = await this.httpHelper.request<CreateSpotifyAccessTokenResponseBody>({
+      method: 'POST',
+      url: '/token',
+      auth: {
+        username: params.clientId,
+        password: params.clientSecret
+      },
+      body: qs.stringify({
+        code: params.code,
+        redirect_uri: params.redirectUri,
+        grant_type: 'authorization_code'
+      }),
+      headers: { 'content-type': 'application/x-www-form-urlencoded' }
+    })
+
+    if (response.status !== 200) throw new SpotifyUnexpectedError(response.status)
+
+    const { access_token: accessToken, expires_in: expiresIn, refresh_token: refreshToken } = response.body
+
+    return {
+      accessToken,
+      expiresIn,
+      refreshToken
+    }
+  }
 
   async getPlaylist (params: GetSpotifyPlaylistServiceProtocol.Params): Promise<GetSpotifyPlaylistServiceProtocol.Result> {
     const response = await this.httpHelper.request<GetSpotifyPlaylistResponseBody>({
