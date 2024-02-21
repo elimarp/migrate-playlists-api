@@ -20,7 +20,8 @@ class SessionRepositoryStub implements GetSessionRepository {
       services: [
         {
           accessToken: faker.string.alpha({ length: 16 }),
-          keyword: 'service01'
+          keyword: 'service01',
+          expiresIn: 3600
         }
       ]
     }

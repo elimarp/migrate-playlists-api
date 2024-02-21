@@ -189,6 +189,7 @@ interface ExternalUrls7 {
   spotify: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface LinkedFrom {}
 
 interface Restrictions2 {
