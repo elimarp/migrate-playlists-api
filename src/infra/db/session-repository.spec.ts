@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { makeCreateSession } from '../../../tests/mocks/models/session'
+import { makeCreateSession, makeSessionStreamingService } from '../../../tests/mocks/models/session'
 import { makeMongodbIdString } from '../../../tests/mocks/models/utils'
 import { seedMongodbCollection } from '../../../tests/seeders/mongodb-collection'
 import { purgeCollection } from '../../../tests/utils/mongodb'
@@ -18,11 +18,15 @@ afterAll(async () => {
   await mongodb.disconnect()
 })
 
+afterEach(async () => {
+  await purgeCollection(SessionRepository.name)
+})
+
 describe('Session Repository', () => {
   describe('Get Session', () => {
-    afterEach(async () => {
-      await purgeCollection(SessionRepository.name)
-    })
+    // afterEach(async () => {
+    //   await purgeCollection(SessionRepository.name)
+    // })
 
     it('returns null if cannot find session with the given sessionId', async () => {
       const { sut } = makeSut()
@@ -66,6 +70,38 @@ describe('Session Repository', () => {
       expect(actual).toStrictEqual({
         id: targetSession._id.toString(),
         services: targetSession.services
+      })
+    })
+  })
+
+  describe('Add Service', () => {
+    it('throws SessionNotFound if cannot find session with given sessionId', async () => {
+      const { sut } = makeSut()
+
+      expect(sut.addService(makeMongodbIdString(), makeSessionStreamingService()))
+        .rejects.toEqual(new Error('Session not found'))
+    })
+
+    it('adds service to session successfully', async () => {
+      const { sut } = makeSut()
+
+      const targetSessionId = makeMongodbIdString()
+      const targetSession = {
+        _id: new ObjectId(targetSessionId),
+        ...makeCreateSession()
+      }
+      await seedMongodbCollection(sut.constructor.name, [
+        targetSession,
+        makeCreateSession(),
+        makeCreateSession()
+      ])
+
+      const addingService = makeSessionStreamingService()
+      const actual = await sut.addService(targetSessionId, addingService)
+
+      expect(actual).toStrictEqual({
+        id: targetSessionId,
+        services: [...targetSession.services, addingService]
       })
     })
   })
