@@ -12,7 +12,8 @@ import { CreateStreamingServiceTokenController } from './create-streaming-servic
 class CreateSpotifyTokenStub implements CreateStreamingServiceTokenProtocol {
   async createToken (params: CreateStreamingServiceTokenProtocol.Params): Promise<CreateStreamingServiceTokenProtocol.Result> {
     return {
-      accessToken: makeStreamingServiceAccessToken()
+      accessToken: makeStreamingServiceAccessToken(),
+      expiresIn: 3600
     }
   }
 }

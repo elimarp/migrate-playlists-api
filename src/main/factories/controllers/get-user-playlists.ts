@@ -1,4 +1,4 @@
-import { GetSpotifyUserPlaylists } from '../../../data/usecases/http/playlist/spotify/get-spotify-user-playlists'
+import { GetSpotifyUserPlaylists } from '../../../data/usecases/http/spotify/playlist/get-spotify-user-playlists'
 import { AccessTokenValidator } from '../../../data/usecases/security/access-token-validator'
 import { SessionRepository } from '../../../infra/db/session-repository'
 import { HttpHelper } from '../../../infra/helpers/http-helper'

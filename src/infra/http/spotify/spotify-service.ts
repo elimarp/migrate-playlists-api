@@ -1,13 +1,13 @@
+import * as qs from 'node:querystring'
 import { type CreateSpotifyAccessTokenServiceProtocol } from '../../../data/protocols/http/spotify/create-spotify-access-token'
 import { type GetSpotifyPlaylistServiceProtocol } from '../../../data/protocols/http/spotify/get-playlist'
 import { type GetSpotifyUserPlaylistsServiceProtocol } from '../../../data/protocols/http/spotify/get-user-playlists'
 import { MaximumValueError, MinimumValueError, MissingParamError } from '../../../utils/exceptions'
 import { type HttpHelper } from '../../helpers/http-helper'
-import { type CreateSpotifyAccessTokenResponseBody } from './protocols/create-token'
 import { SpotifyExpiredTokenError, SpotifyPlaylistNotFoundError, SpotifyUnexpectedError } from './protocols/exceptions'
-import { type GetSpotifyPlaylistResponseBody } from './protocols/get-playlist'
-import { type GetSpotifyUserPlaylistsResponseBody } from './protocols/get-user-playlists'
-import * as qs from 'node:querystring'
+import { type CreateSpotifyAccessTokenResponseBody } from './protocols/response-body/create-token'
+import { type GetSpotifyPlaylistResponseBody } from './protocols/response-body/get-playlist'
+import { type GetSpotifyUserPlaylistsResponseBody } from './protocols/response-body/get-user-playlists'
 export class SpotifyService implements GetSpotifyUserPlaylistsServiceProtocol, GetSpotifyPlaylistServiceProtocol, CreateSpotifyAccessTokenServiceProtocol {
   constructor (private readonly httpHelper: HttpHelper) { }
 

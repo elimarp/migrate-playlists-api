@@ -112,7 +112,7 @@ describe('Get User Playlists Controller', () => {
 
     const actual = await sut.handle(data, headers)
 
-    expect(actual).toStrictEqual(unauthorized('accessToken expired'))
+    expect(actual).toStrictEqual(unauthorized({ message: 'accessToken expired' }))
   })
 
   test('return 403 if user is not authenticated to the service requested', async () => {
@@ -140,7 +140,8 @@ describe('Get User Playlists Controller', () => {
       id: 'any-id',
       services: [{
         keyword: 'valid-streaming-service',
-        accessToken: 'specific-access-token'
+        accessToken: 'specific-access-token',
+        expiresIn: 3600
       }]
     })
     const spied = jest.spyOn(usecases['valid-streaming-service'], 'getUserPlaylists')

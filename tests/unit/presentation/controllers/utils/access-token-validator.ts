@@ -13,7 +13,8 @@ export class AccessTokenValidatorStub implements AccessTokenValidatorProtocol {
     services: [
       {
         accessToken: makeStreamingServiceAccessToken(),
-        keyword: 'valid-streaming-service'
+        keyword: 'valid-streaming-service',
+        expiresIn: 3600
       }
     ]
   }
@@ -25,7 +26,8 @@ export class AccessTokenValidatorStub implements AccessTokenValidatorProtocol {
 
       result.services.push({
         accessToken: makeStreamingServiceAccessToken(),
-        keyword: 'another-streaming-service'
+        keyword: 'another-streaming-service',
+        expiresIn: 3600
       })
 
       return result
@@ -35,7 +37,8 @@ export class AccessTokenValidatorStub implements AccessTokenValidatorProtocol {
       services: [
         {
           accessToken: 'specific-access-token',
-          keyword: 'specific-streaming-service'
+          keyword: 'specific-streaming-service',
+          expiresIn: 3600
         }
       ]
     })

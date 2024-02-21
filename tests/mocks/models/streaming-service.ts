@@ -8,7 +8,8 @@ export const makeStreamingServiceAccessToken = () => faker.string.alpha({ length
 export const makeCreateStreamingService = (): CreateStreamingServiceModel => ({
   imageUrl: faker.image.url(),
   name: faker.company.name(),
-  keyword: makeStreamingServiceKeyword()
+  keyword: makeStreamingServiceKeyword(),
+  oauthUrl: faker.internet.url()
 })
 
 export const makeStreamingService = (): StreamingServiceModel => ({

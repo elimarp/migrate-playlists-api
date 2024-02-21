@@ -22,7 +22,7 @@ export class CreateTokenController implements Controller {
       const request = await this.requestValidator.validate(data)
       const token = await this.createSession.create({
         code: request.query.code,
-        serviceKeyword: request.query.service
+        serviceKeyword: request.query.service as 'spotify' // TODO: fix
       })
 
       return ok({
