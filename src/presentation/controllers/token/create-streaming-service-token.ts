@@ -18,7 +18,7 @@ export class CreateStreamingServiceTokenController implements Controller {
   async handle (data: HttpRequestData, headers: HttpRequestHeaders): Promise<HttpResponse> {
     try {
       if (!headers.authorization) return forbidden()
-      await this.accessTokenValidator.validate(headers.authorization)
+      const session = await this.accessTokenValidator.validate(headers.authorization)
 
       const request = await this.requestValidator.validate(data)
 
@@ -28,7 +28,8 @@ export class CreateStreamingServiceTokenController implements Controller {
         })
       }
       await this.usecases[request.params.service].createToken({
-        code: request.body.code
+        code: request.body.code,
+        sessionId: session.id
       })
 
       return created({})

@@ -15,6 +15,7 @@ export type CreateStreamingServiceModel = {
   keyword: string
   name: string
   imageUrl: string
+  oauthUrl: string
 }
 
 // TODO: move mongodb models to somewhere else

@@ -1,6 +1,6 @@
 import { type ObjectId } from 'mongodb'
 
-type SessionServiceModel = {
+export type SessionServiceModel = {
   keyword: string
   accessToken: string
   expiresIn: number

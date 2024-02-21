@@ -19,6 +19,9 @@ const {
   SPOTIFY_API_BASE_URL,
   SPOTIFY_CLIENT_ID,
   SPOTIFY_CLIENT_SECRET,
+  DEEZER_API_BASE_URL,
+  DEEZER_CLIENT_ID,
+  DEEZER_CLIENT_SECRET,
   JWT_SECRET
 } = process.env
 
@@ -37,6 +40,11 @@ export const constants = {
       BASE_URL: required({ SPOTIFY_API_BASE_URL }),
       CLIENT_ID: required({ SPOTIFY_CLIENT_ID }),
       CLIENT_SECRET: required({ SPOTIFY_CLIENT_SECRET })
+    },
+    deezer: {
+      BASE_URL: required({ DEEZER_API_BASE_URL }),
+      CLIENT_ID: required({ DEEZER_CLIENT_ID }),
+      CLIENT_SECRET: required({ DEEZER_CLIENT_SECRET })
     }
   },
   database: {
