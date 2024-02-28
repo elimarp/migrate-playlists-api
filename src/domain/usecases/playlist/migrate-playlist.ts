@@ -4,9 +4,15 @@ export interface MigratePlaylistProtocol {
 
 export namespace MigratePlaylistProtocol {
   export type Params = {
-    from: string // TODO: StreamingService
-    to: string // TODO: StreamingService
-    playlistId: string
+    from: {
+      service: string // TODO: StreamingService
+      accessToken: string
+      playlistId: string
+    }
+    to: {
+      service: string // TODO: StreamingService
+      accessToken: string
+    }
   }
   export type Result = {
     playlistUrl: string

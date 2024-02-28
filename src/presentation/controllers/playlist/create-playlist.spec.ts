@@ -146,17 +146,29 @@ describe('Create Playlist Controller', () => {
   })
 
   it('ensures usecase is called correctly', async () => {
-    const { sut, migratePlaylistStub } = makeSut()
+    const { sut, migratePlaylistStub, accessTokenValidatorStub } = makeSut()
+
+    const session = await accessTokenValidatorStub.validate('any-access-token')
+    jest.spyOn(accessTokenValidatorStub, 'validate').mockResolvedValueOnce(session)
 
     const spied = jest.spyOn(migratePlaylistStub, 'migrate')
 
     const [data, headers] = makeRequest()
+    const fromService = session.services.find(service => service.keyword === data.body?.from)
+    const toService = session.services.find(service => service.keyword === data.body?.to)
+
     await sut.handle(data, headers)
 
     expect(spied).toHaveBeenCalledWith({
-      from: data.body?.from,
-      to: data.body?.to,
-      playlistId: data.body?.playlistId
+      from: {
+        service: data.body?.from,
+        accessToken: fromService?.accessToken,
+        playlistId: data.body?.playlistId
+      },
+      to: {
+        service: data.body?.to,
+        accessToken: toService?.accessToken
+      }
     })
   })
 

@@ -28,9 +28,15 @@ export class CreatePlaylistController implements Controller {
       if (!toService) return unprocessableEntity({ message: 'you are not authenticated to the service you are migrating to' })
 
       const { playlistUrl } = await this.migratePlaylist.migrate({
-        from: request.body.from,
-        to: request.body.to,
-        playlistId: request.body.playlistId
+        from: {
+          service: fromService.keyword,
+          accessToken: fromService.accessToken,
+          playlistId: request.body.playlistId
+        },
+        to: {
+          service: toService.keyword,
+          accessToken: toService.accessToken
+        }
       })
 
       return created({
