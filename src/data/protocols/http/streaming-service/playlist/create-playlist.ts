@@ -4,8 +4,10 @@ export interface CreatePlaylistServiceProtocol {
 
 export namespace CreatePlaylistServiceProtocol {
   export type Params = {
+    accessToken: string
     name: string
-    description: string
+    description?: string
+    // TODO: isPublic?
   }
   export type Result = {
     id: string

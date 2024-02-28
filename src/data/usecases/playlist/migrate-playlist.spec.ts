@@ -83,7 +83,8 @@ describe('Migrate Playlist Usecase', () => {
 
     expect(spied).toHaveBeenCalledWith({
       name: playlist.name,
-      description: playlist.description
+      description: playlist.description,
+      accessToken: params.to.accessToken
     })
   })
 

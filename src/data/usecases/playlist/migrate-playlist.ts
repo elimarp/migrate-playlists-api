@@ -18,7 +18,8 @@ export class MigratePlaylist implements MigratePlaylistProtocol {
 
     const toPlaylist = await this.createPlaylistService.createPlaylist({
       name: fromPlaylist.name,
-      description: fromPlaylist.description
+      description: fromPlaylist.description,
+      accessToken: params.to.accessToken
     })
 
     const message = {
