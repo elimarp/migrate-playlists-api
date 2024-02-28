@@ -8,6 +8,7 @@
     "test:verbose": "jest --verbose",
     "test:dev": "jest --watchAll --clearMocks",
     "test": "jest --clearMocks",
+    "test:clear": "jest --clearCache",
     "lint": "eslint './src/**/*.ts' './tests/**/*.ts'",
     "compile": "tsc",
     "fix": "eslint --fix './src/**/*.ts' './tests/**/*.ts'"

@@ -85,6 +85,7 @@ describe('Validate Token Use Case', () => {
     })
     expect(actual.services[0]).toStrictEqual({
       accessToken: expect.any(String),
+      expiresIn: expect.any(Number),
       keyword: expect.any(String)
     })
   })

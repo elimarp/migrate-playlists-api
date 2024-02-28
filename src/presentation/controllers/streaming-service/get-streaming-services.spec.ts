@@ -57,7 +57,8 @@ describe('Get Services Controller', () => {
       id: expect.any(String),
       imageUrl: expect.any(String),
       name: expect.any(String),
-      keyword: expect.any(String)
+      keyword: expect.any(String),
+      oauthUrl: expect.any(String)
     })
   })
 })

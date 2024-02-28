@@ -112,7 +112,7 @@ describe('Get User Playlists Controller', () => {
 
     const actual = await sut.handle(data, headers)
 
-    expect(actual).toStrictEqual(unauthorized({ message: 'accessToken expired' }))
+    expect(actual).toStrictEqual(unauthorized())
   })
 
   test('return 403 if user is not authenticated to the service requested', async () => {

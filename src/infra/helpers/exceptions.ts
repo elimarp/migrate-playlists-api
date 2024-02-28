@@ -1,5 +1,5 @@
 export class AccessTokenExpiredError extends Error {
   constructor () {
-    super('accessToken expired')
+    super('Access token expired')
   }
 }

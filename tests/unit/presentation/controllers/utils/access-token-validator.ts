@@ -8,7 +8,11 @@ import { AccessTokenExpiredError } from '../../../../../src/infra/helpers/except
 export const makeStreamingServiceAccessToken = () => faker.string.alpha({ length: 16 })
 
 export class AccessTokenValidatorStub implements AccessTokenValidatorProtocol {
-  private readonly defaultResult: SessionModel = {
+  constructor (
+    private readonly overrideDefault?: keyof AccessTokenValidatorStub['implementations']
+  ) {}
+
+  private readonly default: SessionModel = {
     id: makeMongodbIdString(),
     services: [
       {
@@ -21,8 +25,9 @@ export class AccessTokenValidatorStub implements AccessTokenValidatorProtocol {
 
   public readonly implementations = {
     expiredToken: async () => { throw new AccessTokenExpiredError() },
+
     anotherStreamingService: async (): Promise<SessionModel> => {
-      const result = { ...this.defaultResult }
+      const result = { ...this.default }
 
       result.services.push({
         accessToken: makeStreamingServiceAccessToken(),
@@ -32,6 +37,7 @@ export class AccessTokenValidatorStub implements AccessTokenValidatorProtocol {
 
       return result
     },
+
     specificServiceValues: async (): Promise<SessionModel> => ({
       id: makeMongodbIdString(),
       services: [
@@ -41,10 +47,15 @@ export class AccessTokenValidatorStub implements AccessTokenValidatorProtocol {
           expiresIn: 3600
         }
       ]
+    }),
+
+    specificSessionId: async (): Promise<SessionModel> => ({
+      id: 'specific-session-id',
+      services: this.default.services
     })
   }
 
   async validate (accessToken: string): Promise<SessionModel> {
-    return this.defaultResult
+    return this.overrideDefault ? (await this.implementations[this.overrideDefault]()) : this.default
   }
 }

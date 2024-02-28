@@ -35,11 +35,11 @@ describe('Streaming Service Repository', () => {
 
     // console.log({ streamingServices })
 
+    // TODO: understand why the hell _id keeps being injected in streamingServices
     await seedMongodbCollection(sut.constructor.name, streamingServices)
 
     const actual = await sut.getAll()
 
-    // TODO: understand why the hell _id keeps being injected here
     const expected = streamingServices.map(({ _id, ...item }: any) => ({ ...item, id: expect.any(String) }))
 
     // console.log({ expected })

@@ -150,16 +150,17 @@ describe('Create Streaming Service Token Controller', () => {
   })
 
   it('ensures usecase is called correctly', async () => {
-    const { sut, usecases } = makeSut()
+    const { sut, usecases, accessTokenValidatorStub } = makeSut()
+
+    jest.spyOn(accessTokenValidatorStub, 'validate').mockImplementationOnce(accessTokenValidatorStub.implementations.specificSessionId)
 
     const spied = jest.spyOn(usecases.spotify, 'createToken')
 
     const [data, headers] = makeRequest()
 
-    const actual = await sut.handle(data, headers)
-    console.log({ actual })
+    await sut.handle(data, headers)
 
-    expect(spied).toHaveBeenCalledWith({ code: data.body?.code })
+    expect(spied).toHaveBeenCalledWith({ code: data.body?.code, sessionId: 'specific-session-id' })
   })
 
   it('returns 201', async () => {

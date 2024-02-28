@@ -48,7 +48,7 @@ export const notFound = ({ message }: { message?: string } = {}): HttpResponse =
   body: { message: message ?? 'not found' }
 })
 
-export const unprocessableEntity = ({ message }: { message?: string }): HttpResponse => ({
+export const unprocessableEntity = ({ message }: { message?: string } = {}): HttpResponse => ({
   status: 422,
   body: { message: message ?? 'Unprocessable entity' }
 })
