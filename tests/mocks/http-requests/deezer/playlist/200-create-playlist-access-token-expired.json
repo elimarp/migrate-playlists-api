@@ -1,0 +1,7 @@
+{
+  "error": {
+      "type": "OAuthException",
+      "message": "Invalid OAuth access token.",
+      "code": 300
+  }
+}

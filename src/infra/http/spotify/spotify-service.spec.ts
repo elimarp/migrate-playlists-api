@@ -9,6 +9,7 @@ import { HttpHelper, type HttpHelperRequest, type HttpHelperResponse } from '../
 import { SpotifyExpiredTokenError, SpotifyPlaylistNotFoundError, SpotifyUnexpectedError } from './protocols/exceptions'
 import { SpotifyService } from './spotify-service'
 import * as qs from 'node:querystring'
+import { makeRandomFailStatus } from '../../../../tests/mocks/services/http'
 class HttpHelperStub extends HttpHelper {
   async request (params: HttpHelperRequest): Promise<HttpHelperResponse<any>> {
     const getSpotifyUserPlaylistsEndpointRegex = /\/users\/.*\/playlists/
@@ -211,8 +212,7 @@ describe('Get Spotify Playlist Service', () => {
   it('throws SpotifyUnexpectedError when status is not 200', async () => {
     const { sut, httpHelperStub } = makeSut()
 
-    const failStatus = [400, 403, 422, 409, 500]
-    const expectedStatus = failStatus[faker.number.int({ min: 0, max: failStatus.length - 1 })]
+    const expectedStatus = makeRandomFailStatus()
 
     jest.spyOn(httpHelperStub, 'request').mockImplementationOnce(async () => ({
       status: expectedStatus,
@@ -296,8 +296,7 @@ describe('Create Spotify Access Token Service', () => {
   it('throws if Spotify response status is not 200', async () => {
     const { sut, httpHelperStub } = makeSut()
 
-    const failStatus = [400, 403, 422, 409, 500]
-    const expectedStatus = failStatus[faker.number.int({ min: 0, max: failStatus.length - 1 })]
+    const expectedStatus = makeRandomFailStatus()
 
     jest.spyOn(httpHelperStub, 'request').mockImplementationOnce(async () => ({
       status: expectedStatus,

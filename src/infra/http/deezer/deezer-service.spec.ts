@@ -4,14 +4,28 @@ import { constants } from '../../../utils/constants'
 import { HttpHelper, type HttpHelperRequest, type HttpHelperResponse } from '../../helpers/http-helper'
 import { DeezerService } from './deezer-service'
 import { DeezerUnexpectedError } from './protocols/exceptions'
-import * as createAccessToken from '../../../../tests/mocks/http-requests/deezer/create-access-token.json'
+import * as createAccessTokenMock from '../../../../tests/mocks/http-requests/deezer/create-access-token.json'
+import * as createPlaylistMock from '../../../../tests/mocks/http-requests/deezer/playlist/200-create-playlist-success.json'
+import * as createPlaylistOauthExceptionMock from '../../../../tests/mocks/http-requests/deezer/playlist/200-create-playlist-access-token-expired.json'
+import { type CreatePlaylistServiceProtocol } from '../../../data/protocols/http/streaming-service/playlist/create-playlist'
+import { makeStreamingServiceAccessToken } from '../../../../tests/mocks/models/streaming-service'
+import { makeRandomFailStatus } from '../../../../tests/mocks/services/http'
 
 class HttpHelperStub extends HttpHelper {
   async request (params: HttpHelperRequest): Promise<HttpHelperResponse<any>> {
-    return {
-      status: 200,
-      body: createAccessToken
+    if (params.method === 'GET' && params.url.startsWith('/oauth/access_token')) {
+      return {
+        status: 200,
+        body: createAccessTokenMock
+      }
     }
+    if (params.method === 'POST' && params.url.startsWith('/user/me/playlists')) {
+      return {
+        status: 200,
+        body: createPlaylistMock
+      }
+    }
+    throw new Error('Method not implemented.')
   }
 }
 
@@ -49,8 +63,7 @@ describe('Deezer Service', () => {
     it('throws if response status is not 200', async () => {
       const { sut, httpHelperStub } = makeSut()
 
-      const failStatus = [400, 403, 422, 409, 500]
-      const expectedStatus = failStatus[faker.number.int({ min: 0, max: failStatus.length - 1 })]
+      const expectedStatus = makeRandomFailStatus()
       jest.spyOn(httpHelperStub, 'request').mockImplementationOnce(
         async () => ({ status: expectedStatus, body: {} })
       )
@@ -64,11 +77,66 @@ describe('Deezer Service', () => {
       const actual = await sut.createAccessToken(makeParams())
 
       expect(actual).toStrictEqual({
-        accessToken: createAccessToken.access_token,
-        expiresIn: createAccessToken.expires
+        accessToken: createAccessTokenMock.access_token,
+        expiresIn: createAccessTokenMock.expires
+      })
+    })
+  })
+
+  describe('Create Deezer Playlist Service', () => {
+    const makeParams = (): CreatePlaylistServiceProtocol.Params => ({
+      accessToken: makeStreamingServiceAccessToken(),
+      name: faker.word.noun()
+    })
+
+    it('ensures httpHelper is called correctly', async () => {
+      const { sut, httpHelperStub } = makeSut()
+
+      const spied = jest.spyOn(httpHelperStub, 'request')
+
+      const params = makeParams()
+      await sut.createPlaylist(params)
+
+      expect(spied).toHaveBeenCalledWith({
+        method: 'POST',
+        url: `/user/me/playlists?access_token=${params.accessToken}&title=${params.name}`
       })
     })
 
-    // it('', async () => {})
+    it('throws if response.status is not 200', async () => {
+      const { sut, httpHelperStub } = makeSut()
+
+      const expectedStatus = makeRandomFailStatus()
+      jest.spyOn(httpHelperStub, 'request').mockImplementationOnce(
+        async () => ({ status: expectedStatus, body: {} })
+      )
+
+      expect(sut.createPlaylist(makeParams())).rejects.toEqual(
+        new DeezerUnexpectedError(expectedStatus, expect.any(Object))
+      )
+    })
+
+    it('throws if no response.body.id', async () => {
+      const { sut, httpHelperStub } = makeSut()
+
+      jest.spyOn(httpHelperStub, 'request').mockImplementationOnce(
+        async () => ({ status: 200, body: createPlaylistOauthExceptionMock })
+      )
+
+      expect(sut.createPlaylist(makeParams())).rejects.toEqual(
+        new DeezerUnexpectedError(200, createPlaylistOauthExceptionMock)
+      )
+    })
+
+    it('returns data successfully', async () => {
+      const { sut } = makeSut()
+
+      const actual = await sut.createPlaylist(makeParams())
+
+      expect(actual).toStrictEqual({
+        id: `${createPlaylistMock.id}`,
+        url: `https://www.deezer.com/playlist/${createPlaylistMock.id}`
+      })
+    })
   })
 })
