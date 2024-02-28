@@ -7,7 +7,7 @@ const config = {
   coverageDirectory: "coverage",
   coverageProvider: "v8", // babel is an option
   preset: "@shelf/jest-mongodb",
-  watchPathIgnorePatterns: ['globalConfig'],
+  watchPathIgnorePatterns: ['globalConfig']
 };
 
 module.exports = config;
