@@ -1,3 +1,9 @@
+import { type Track } from './track'
+
+type PlaylistTrack = Track & {
+  addedAt: Date
+}
+
 export type PlaylistModel = {
   id: string
   name: string
@@ -8,17 +14,5 @@ export type PlaylistModel = {
     url: string
     width: number
   }[]
-  tracks: {
-    id: string
-    name: string
-    addedAt: Date
-    album: {
-      id: string
-      name: string
-    }
-    artists: {
-      id: string
-      name: string
-    }[]
-  }[]
+  tracks: PlaylistTrack[]
 }

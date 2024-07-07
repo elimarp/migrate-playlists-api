@@ -9,6 +9,7 @@ export class GetStreamingServicesController implements Controller {
   async handle (_data: HttpRequestData, _headers: HttpRequestHeaders): Promise<HttpResponse> {
     try {
       const services = await this.getServices.getAllStreamingServices()
+
       return ok({ payload: services })
     } catch (error) {
       return serverError()

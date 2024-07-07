@@ -1,6 +1,6 @@
 import * as qs from 'node:querystring'
 import { type CreateSpotifyAccessTokenServiceProtocol } from '../../../data/protocols/http/spotify/create-spotify-access-token'
-import { type GetSpotifyPlaylistServiceProtocol } from '../../../data/protocols/http/spotify/get-playlist'
+import { type GetPlaylistServiceProtocol } from '../../../data/protocols/http/streaming-service/playlist/get-playlist'
 import { type GetSpotifyUserPlaylistsServiceProtocol } from '../../../data/protocols/http/spotify/get-user-playlists'
 import { MaximumValueError, MinimumValueError, MissingParamError } from '../../../utils/exceptions'
 import { type HttpHelper } from '../../helpers/http-helper'
@@ -8,8 +8,14 @@ import { SpotifyExpiredTokenError, SpotifyPlaylistNotFoundError, SpotifyUnexpect
 import { type CreateSpotifyAccessTokenResponseBody } from './protocols/response-body/create-token'
 import { type GetSpotifyPlaylistResponseBody } from './protocols/response-body/get-playlist'
 import { type GetSpotifyUserPlaylistsResponseBody } from './protocols/response-body/get-user-playlists'
-export class SpotifyService implements GetSpotifyUserPlaylistsServiceProtocol, GetSpotifyPlaylistServiceProtocol, CreateSpotifyAccessTokenServiceProtocol {
+import { type CreatePlaylistServiceProtocol } from '../../../data/protocols/http/streaming-service/playlist/create-playlist'
+export class SpotifyService implements GetSpotifyUserPlaylistsServiceProtocol, GetPlaylistServiceProtocol, CreateSpotifyAccessTokenServiceProtocol, CreatePlaylistServiceProtocol {
   constructor (private readonly httpHelper: HttpHelper) { }
+
+  // TODO: spotify.createPlaylist
+  async createPlaylist (params: CreatePlaylistServiceProtocol.Params): Promise<CreatePlaylistServiceProtocol.Result> {
+    throw new Error('Method not implemented.')
+  }
 
   async createAccessToken (params: CreateSpotifyAccessTokenServiceProtocol.Params): Promise<CreateSpotifyAccessTokenServiceProtocol.Result> {
     const response = await this.httpHelper.request<CreateSpotifyAccessTokenResponseBody>({
@@ -38,7 +44,7 @@ export class SpotifyService implements GetSpotifyUserPlaylistsServiceProtocol, G
     }
   }
 
-  async getPlaylist (params: GetSpotifyPlaylistServiceProtocol.Params): Promise<GetSpotifyPlaylistServiceProtocol.Result> {
+  async getPlaylist (params: GetPlaylistServiceProtocol.Params): Promise<GetPlaylistServiceProtocol.Result> {
     const response = await this.httpHelper.request<GetSpotifyPlaylistResponseBody>({
       method: 'GET',
       url: `/playlists/${params.playlistId}`,

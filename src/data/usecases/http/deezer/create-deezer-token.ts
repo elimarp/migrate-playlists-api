@@ -6,7 +6,7 @@ import { type CreateDeezerAccessTokenServiceProtocol } from '../../../protocols/
 export class CreateDeezerToken implements CreateStreamingServiceTokenProtocol {
   constructor (
     private readonly createDeezerAccessTokenService: CreateDeezerAccessTokenServiceProtocol,
-    private readonly addSessionStreamingServiceRepository: AddSessionServiceRepository
+    private readonly addSessionServiceRepository: AddSessionServiceRepository
   ) {}
 
   async createToken (params: CreateStreamingServiceTokenProtocol.Params): Promise<CreateStreamingServiceTokenProtocol.Result> {
@@ -16,7 +16,7 @@ export class CreateDeezerToken implements CreateStreamingServiceTokenProtocol {
       code: params.code
     })
 
-    await this.addSessionStreamingServiceRepository.addService(params.sessionId, {
+    await this.addSessionServiceRepository.addService(params.sessionId, {
       accessToken: deezerToken.accessToken,
       expiresIn: deezerToken.expiresIn,
       keyword: 'deezer'

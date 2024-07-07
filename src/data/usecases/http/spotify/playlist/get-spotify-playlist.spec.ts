@@ -1,14 +1,14 @@
 import { makePlaylist } from '../../../../../../tests/mocks/models/playlist'
 import { PlaylistNotFoundError } from '../../../../../domain/usecases/playlist/exceptions'
-import { type GetSpotifyPlaylistServiceProtocol } from '../../../../protocols/http/spotify/get-playlist'
+import { type GetPlaylistServiceProtocol } from '../../../../protocols/http/streaming-service/playlist/get-playlist'
 import { GetSpotifyPlaylist } from './get-spotify-playlist'
 
-class GetSpotifyPlaylistServiceStub implements GetSpotifyPlaylistServiceProtocol {
+class GetSpotifyPlaylistServiceStub implements GetPlaylistServiceProtocol {
   public readonly implementations = {
     notFound: async () => { throw new PlaylistNotFoundError() }
   }
 
-  async getPlaylist (params: GetSpotifyPlaylistServiceProtocol.Params): Promise<GetSpotifyPlaylistServiceProtocol.Result> {
+  async getPlaylist (params: GetPlaylistServiceProtocol.Params): Promise<GetPlaylistServiceProtocol.Result> {
     return makePlaylist()
   }
 }
