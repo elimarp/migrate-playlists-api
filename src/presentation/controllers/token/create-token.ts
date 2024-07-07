@@ -16,7 +16,7 @@ export class CreateTokenController implements Controller {
     private readonly requestValidator: RequestValidatorProtocol<CreateTokenRequest>
   ) {}
 
-  // TODO: NEITHER CODE OR SERVICE SHOULD BE A QUERY PARAM
+  // TODO: NEITHER CODE NOR SERVICE SHOULD BE A QUERY PARAM
   async handle (data: HttpRequestData, headers: HttpRequestHeaders): Promise<HttpResponse> {
     try {
       const request = await this.requestValidator.validate(data)

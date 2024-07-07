@@ -34,7 +34,7 @@ export class CreateSession implements CreateSessionProtocol {
           accessToken: streamingServiceToken.accessToken,
           expiresIn: streamingServiceToken.expiresIn,
           refreshToken: streamingServiceToken.refreshToken
-          // TODO: not all streaming services will have a refresh token
+          // TODO: not every streaming service will have a refresh token
         }
       ]
     })

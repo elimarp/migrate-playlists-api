@@ -22,9 +22,9 @@ export class CreatePlaylistController implements Controller {
       const request = await this.requestValidator.validate(data)
 
       const fromService = session.services.find(service => service.keyword === request.body.from)
-      const toService = session.services.find(service => service.keyword === request.body.to)
-
       if (!fromService) return unprocessableEntity({ message: 'you are not authenticated to the service you are migrating from' })
+
+      const toService = session.services.find(service => service.keyword === request.body.to)
       if (!toService) return unprocessableEntity({ message: 'you are not authenticated to the service you are migrating to' })
 
       const { playlistUrl } = await this.migratePlaylist.migrate({
