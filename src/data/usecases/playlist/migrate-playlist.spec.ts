@@ -1,20 +1,28 @@
 import { faker } from '@faker-js/faker'
 import { type MigratePlaylistProtocol } from '../../../domain/usecases/playlist/migrate-playlist'
 import { MigratePlaylist } from './migrate-playlist'
-import { type GetSpotifyPlaylistServiceProtocol } from '../../protocols/http/spotify/get-playlist'
+import { type GetPlaylistServiceProtocol } from '../../protocols/http/streaming-service/playlist/get-playlist'
 import { type PlaylistModel } from '../../../domain/models/playlist'
 import { type CreatePlaylistServiceProtocol } from '../../protocols/http/streaming-service/playlist/create-playlist'
 import { type PostMessageIntoExchangeProtocol } from '../../protocols/mq/post-message-into-exchange'
 import { makePlaylist } from '../../../../tests/mocks/models/playlist'
 import { makeStreamingServiceAccessToken } from '../../../../tests/mocks/models/streaming-service'
 
-class ValidStreamingServiceServiceStub implements GetSpotifyPlaylistServiceProtocol {
-  async getPlaylist (params: GetSpotifyPlaylistServiceProtocol.Params): Promise<PlaylistModel> {
+class ValidStreamingServiceServiceStub implements GetPlaylistServiceProtocol, CreatePlaylistServiceProtocol {
+  async createPlaylist (params: CreatePlaylistServiceProtocol.Params): Promise<CreatePlaylistServiceProtocol.Result> {
+    throw new Error('Method not implemented.')
+  }
+
+  async getPlaylist (params: GetPlaylistServiceProtocol.Params): Promise<PlaylistModel> {
     return makePlaylist()
   }
 }
 
-class AnotherStreamingServiceServiceStub implements CreatePlaylistServiceProtocol {
+class AnotherStreamingServiceServiceStub implements CreatePlaylistServiceProtocol, GetPlaylistServiceProtocol {
+  async getPlaylist (params: GetPlaylistServiceProtocol.Params): Promise<PlaylistModel> {
+    throw new Error('Method not implemented.')
+  }
+
   async createPlaylist (params: CreatePlaylistServiceProtocol.Params): Promise<CreatePlaylistServiceProtocol.Result> {
     return { id: faker.string.uuid(), url: faker.internet.url() }
   }
@@ -25,18 +33,19 @@ class RabbitMqHelperStub implements PostMessageIntoExchangeProtocol {
 }
 
 const makeSut = () => {
-  const validStreamingServiceServiceStub = new ValidStreamingServiceServiceStub()
-  const anotherStreamingServiceServiceStub = new AnotherStreamingServiceServiceStub()
+  const services = {
+    'valid-streaming-service': new ValidStreamingServiceServiceStub(),
+    'another-streaming-service': new AnotherStreamingServiceServiceStub()
+  }
   const rabbitMqHelperStub = new RabbitMqHelperStub()
 
   return {
     sut: new MigratePlaylist(
-      validStreamingServiceServiceStub,
-      anotherStreamingServiceServiceStub,
+      services,
+      services,
       rabbitMqHelperStub
     ),
-    validStreamingServiceServiceStub,
-    anotherStreamingServiceServiceStub,
+    services,
     rabbitMqHelperStub
   }
 }
@@ -55,9 +64,9 @@ const makeParams = (): MigratePlaylistProtocol.Params => ({
 
 describe('Migrate Playlist Usecase', () => {
   it('ensures getPlaylistService is called correctly', async () => {
-    const { sut, validStreamingServiceServiceStub } = makeSut()
+    const { sut, services } = makeSut()
 
-    const spied = jest.spyOn(validStreamingServiceServiceStub, 'getPlaylist')
+    const spied = jest.spyOn(services['valid-streaming-service'], 'getPlaylist')
 
     const params = makeParams()
 
@@ -70,12 +79,12 @@ describe('Migrate Playlist Usecase', () => {
   })
 
   it('ensures createPlaylistService is called correctly', async () => {
-    const { sut, validStreamingServiceServiceStub, anotherStreamingServiceServiceStub } = makeSut()
+    const { sut, services } = makeSut()
 
     const playlist = makePlaylist()
-    jest.spyOn(validStreamingServiceServiceStub, 'getPlaylist').mockResolvedValueOnce(playlist)
+    jest.spyOn(services['valid-streaming-service'], 'getPlaylist').mockResolvedValueOnce(playlist)
 
-    const spied = jest.spyOn(anotherStreamingServiceServiceStub, 'createPlaylist')
+    const spied = jest.spyOn(services['another-streaming-service'], 'createPlaylist')
 
     const params = makeParams()
 
@@ -92,18 +101,17 @@ describe('Migrate Playlist Usecase', () => {
     const {
       sut,
       rabbitMqHelperStub,
-      validStreamingServiceServiceStub,
-      anotherStreamingServiceServiceStub
+      services
     } = makeSut()
 
     const fromPlaylist = makePlaylist()
-    jest.spyOn(validStreamingServiceServiceStub, 'getPlaylist').mockResolvedValueOnce(fromPlaylist)
+    jest.spyOn(services['valid-streaming-service'], 'getPlaylist').mockResolvedValueOnce(fromPlaylist)
 
     const toPlaylist = {
       id: faker.string.uuid(),
       url: faker.internet.url()
     }
-    jest.spyOn(anotherStreamingServiceServiceStub, 'createPlaylist').mockResolvedValueOnce(toPlaylist)
+    jest.spyOn(services['another-streaming-service'], 'createPlaylist').mockResolvedValueOnce(toPlaylist)
 
     const spied = jest.spyOn(rabbitMqHelperStub, 'postMessage')
 
@@ -137,13 +145,13 @@ describe('Migrate Playlist Usecase', () => {
   })
 
   it('returns result successfully', async () => {
-    const { sut, anotherStreamingServiceServiceStub } = makeSut()
+    const { sut, services } = makeSut()
 
     const createdPlaylist = {
       id: faker.string.uuid(),
       url: faker.internet.url()
     }
-    jest.spyOn(anotherStreamingServiceServiceStub, 'createPlaylist').mockResolvedValueOnce(createdPlaylist)
+    jest.spyOn(services['another-streaming-service'], 'createPlaylist').mockResolvedValueOnce(createdPlaylist)
 
     const actual = await sut.migrate(makeParams())
 
